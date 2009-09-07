@@ -1,0 +1,40 @@
+9
+
+dir
+55567
+https://svn.codehaus.org/grails-plugins/grails-scaffold-tags/trunk/src/skins/no-img-skin/scaffolding
+https://svn.codehaus.org/grails-plugins
+
+
+
+2009-06-21T02:59:32.000306Z
+53433
+oscarks
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+832c1c66-4827-0410-8465-ccb17913cd09
+
+show
+dir
+
+editor
+dir
+
+list.item
+dir
+
+list
+dir
+

@@ -1,0 +1,94 @@
+textarea.codeShare {
+    width: 100%;
+    height: 20em;
+}
+
+.list .property a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.list .property a:hover {
+    text-decoration: underline;
+}
+
+#showBlogEntry div.titleSection {
+    margin: 0;
+}
+#showBlogEntry div.pageActions {
+    margin: 0;
+}
+div.pageActions .actionButton {
+    margin: 0;
+}
+#showBlogEntry div.pageActions .actionButton a {
+    background-color: #FCFCFC;
+    color: #333333;
+    border: 1px solid #CCCCCC;
+}
+
+#showBlogEntry h1.title {
+    display: block;
+}
+.author {
+    display: inline;
+    font-family: Georgia, serif;
+}
+.author a {
+    text-decoration: none;
+    color: #886688;
+}
+.author a:hover {
+    text-decoration: underline;
+    color: #555555;
+}
+.createdOn {
+    display: inline;
+    font-family: Georgia, serif;
+}
+.blogEntryTitle {
+    display: inline;
+    font-family: Georgia, serif;
+    font-size: 15pt;
+}
+.blogEntryTitle a {
+    text-decoration: none;
+    color: #222222;
+}
+.blogEntryTitle a:hover {
+    text-decoration: underline;
+    color: #555555;
+}
+.writtenOn {
+    display: inline;
+    font-family: Georgia, serif;
+    font-size: 10pt;
+}
+.lastUpdate {
+    font-family: Georgia, serif;
+    font-size: 10pt;
+}
+.blogEntryText {
+    margin: 5px 0px 0px 0px;
+}
+
+.blogEntryPreview {
+	padding: 3px;
+	border: 1px solid #EEEEEE;
+	margin: 8px 3px 8px 3px;
+}
+.moreLink {
+    font-family: Georgia, serif;
+    font-size: 10pt;
+}
+.moreLink a {
+    text-decoration: none;
+    font-style: italic;
+    color: #444444;
+    background-color: #EEEEEE;
+}
+.moreLink a:hover {
+    text-decoration: underline;
+    color: #DD4444;
+    background-color: #F0F0F0;
+}

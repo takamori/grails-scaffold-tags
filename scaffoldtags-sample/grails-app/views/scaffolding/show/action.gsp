@@ -1,0 +1,2 @@
+<span class="actionButton"><g:if test="${controller}">
+        <g:link controller="${controller}" action="${action}" id="${item?.id}">${label}</g:link></g:if><g:else><g:link action="${action}" id="${item?.id}">${label}</g:link></g:else></span> 

@@ -1,0 +1,1 @@
+<span class="button"><g:actionSubmit value="${label?label:action}" /></span>

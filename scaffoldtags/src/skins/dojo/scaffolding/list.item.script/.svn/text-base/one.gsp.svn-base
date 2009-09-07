@@ -1,0 +1,2 @@
+<%/* Create a link to show the referenced domain */%>
+domain[property] = '<g:link controller="'+domain[property].class.toLowerCase()+'" action="show" id="'+domain[property].id+'">'+domain[property].id+'</g:link>';

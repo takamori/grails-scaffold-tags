@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/grails-plugins/!svn/ver/53431/grails-scaffold-tags/trunk/grails-app/taglib
+END
+InvokeTagLib.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/grails-plugins/!svn/ver/831/grails-scaffold-tags/trunk/grails-app/taglib/InvokeTagLib.groovy
+END
+ScaffoldTagLib.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/grails-plugins/!svn/ver/53431/grails-scaffold-tags/trunk/grails-app/taglib/ScaffoldTagLib.groovy
+END

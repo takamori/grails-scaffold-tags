@@ -1,0 +1,1 @@
+<span class="moreLink"><g:link controller="entry" action="show" id="${value.id}">(more)</g:link></span>

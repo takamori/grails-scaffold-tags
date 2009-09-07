@@ -1,0 +1,1 @@
+<g:link controller="${referencedController}" action="show" id="${value?.id}">${value}</g:link>

@@ -1,0 +1,94 @@
+VERSION: 0.7.2
+
+Changes since 0.7.1:
+- fixed issues that prevented sample app from working against Grails 1.1.1
+- Checked in associated sample app code into source control, and documented the creation of the sample app.
+
+Changes since 0.7:
+- Update to Grails 1.1
+- Doh!  Forgot to make the create view also use Dojo.
+
+Changes since 0.6.1:
+- fixed action.gsp for international use (bug identified by Guido Schoepp)
+- added new "dojo" AJAX skin - uses the Dojo 0.4.3 toolkit, and degrades smoothly 
+to HTML/CSS when JS is disabled.  Note that Dojo should be installed under 
+web-app/js/dojo.
+- scaffold-skins are moved to src/skins because of plugin changes
+- renamed install-scaffold-skin script as install-skin
+- released with new SVN structure
+
+Changes since 0.6(b):
+- double-oops.  Fixed NPE when scaffold-skins directory doesn't exist in the app.
+
+Changes since 0.6 (original):
+- oops.  Didn't properly clean up the package before putting it into distribution.
+- moved skins to scaffold-skins; added support in install-scaffold-skin script
+for installing skins from an application's scaffold-skins directory; 
+note that an application's skins will override those of the plugin.
+(yep, this is related to the first item).
+
+Changes since 0.5.1:
+- added <g:renderAction> and <g:renderActions> to support flexible 
+rendering of the actions available, using an action.gsp template
+- added missing Calendar renderer for list view
+- added support for skins!  Initial skins are:
+	* the old renderers that look like the default Grails scaffolding
+	* a prettier HTML-only no-image set
+- there are no default renderers installed; you MUST install a skin 
+prior to using ScaffoldTags.  Overwrite-detection is improved.
+- updated for Grails 0.5 (Groovy upgrade, GSP Dynamic taglib output, and resource loading changes)
+- added support for a domain widget parameter for <g:renderDomain>
+- created support for linked properties in no-img-skin's list view via a link style for each property
+
+Changes since 0.5:
+- fix to install-scaffold-tags-views script
+- updated to address Grails 0.5 internal API changes
+
+Changes since 0.4:
+- fixed various parts of tag API documentation
+- checked into Grails Plugin SVN
+- refactored templates to use "widget" templates.  
+If you've been relying upon the style attribute map to specify a widget value, 
+please use the widget attribute instead for a single value, 
+or the widgets attribute to specify a map of fields to widgets.
+If you've installed the scaffold renderers, you will need to either
+overwrite them with a re-install, or update them.
+- reduced # of places I have to edit the plugin version number; still ugly
+- removed installation script for default renderers as this is no longer 
+recommended usage.
+- added support for Interface renderers!
+- added simple Map and Collection renderers, with embedded behavior support.
+
+Changes since 0.3:
+- added support for specifying domains, types, and properties by name to 
+ permit greater ease and flexibility in the display of domain renderers
+- added g:eachProperty, to assist the generation of bean renderers 
+(sorry, still no support for interfaces yet...)
+- added support for inherited associations
+- fixed one-many editor scaffold template
+- fixed Calendar editor style behavior to be consistent with Date
+- added documentation on tags, templates, and behaviors
+- fixed bug in TimeZone editor; but won't really work until g:timeZoneSelect is fixed
+- fixed show template for java.util.Calendar
+
+Changes since 0.2:
+- fixed various many-many editing issues
+- added support for embedded widget style in show & list templates
+- modified how many-type relationships submit data
+
+Changes since 0.1:
+- added support for many-many embedded editing
+- added support for readonly in more cases
+- improved association handling
+- added sample application
+
+Changes since early Scaffold2 releases:
+- split up plugin into DjangoTemplates, GroovyBinder, and ScaffoldTags 
+in order to increase reusability
+	- DjangoTemplates only captures the Django block tags
+	- ScaffoldTags only handles the views for domain objects using a taglib
+	framework and supporting replacement view scaffolding templates.
+	- GroovyBinder handles binding side of domain objects; acts as a 
+	workaround to lack of proper many-many support in 0.4.2 but does
+	not require significant changes to individual controllers, unlike
+	earlier Scaffold2 release.

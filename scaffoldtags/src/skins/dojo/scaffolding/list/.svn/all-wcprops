@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/grails-plugins/!svn/ver/831/grails-scaffold-tags/trunk/src/skins/dojo/scaffolding/list
+END
+domain.gsp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/grails-plugins/!svn/ver/831/grails-scaffold-tags/trunk/src/skins/dojo/scaffolding/list/domain.gsp
+END
+action.gsp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/grails-plugins/!svn/ver/831/grails-scaffold-tags/trunk/src/skins/dojo/scaffolding/list/action.gsp
+END
+java.lang.Object.gsp
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/grails-plugins/!svn/ver/831/grails-scaffold-tags/trunk/src/skins/dojo/scaffolding/list/java.lang.Object.gsp
+END

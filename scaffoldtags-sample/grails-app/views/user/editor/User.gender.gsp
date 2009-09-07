@@ -1,0 +1,1 @@
+<g:select name="${name}" from="['M','F']" value="${value}" />

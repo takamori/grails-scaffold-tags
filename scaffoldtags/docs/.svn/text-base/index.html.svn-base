@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Grails Plugins by Daiji Takamori</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="shortcut icon" href="images/shortcuticon.png" type="image/png" />
+
+<link rel="stylesheet" href="css/main.css"></link>
+</head>
+<body>
+<h1><img alt="[grails plugin]" src="images/grails-plugin.png"/> Grails ScaffoldTags</h1>
+<p class="note">This is the documentation for the ScaffoldTags plugin for
+<a href="http://grails.org">Grails</a>.  Please let me know what you think of it.  Thanks!
+&nbsp;&nbsp;&nbsp;&mdash; Daiji</p>
+<p>
+Current Version: 0.7.1
+</p>
+<h3>Links</h3>
+<ul>
+<li><a href="tagApi.html">Tag API</a></li>
+<li><a href="templateApi.html">Template API</a></li>
+<li><a href="behaviors.html">Standard Scaffolding Behaviors</a></li>
+<li><a href="http://jira.codehaus.org/browse/GRAILSPLUGINS">Submit a bug</a></li>
+</ul>
+<h2>Features</h2>
+<ul>
+<li>Display, list, or edit domain objects on your GSP pages
+using a single tag call.</li>
+<li>Modify how domain objects and beans are displayed without requiring
+significant rewrite (either for a specific classes or for all classes).</li>
+<li>Modify how specific data types, or even specific domain properties 
+are displayed without requiring significant rewrite.</li>
+<li>Modify how specific types of relationships are displayed.</li>
+<li>Either inherit from a shared template or use a controller-specific 
+template</li>
+<li>Extendable to support other types of views, and to reuse templates
+between view types</li>
+</ul>
+<h2>Skins (installed via "grails install-skin")</h2>
+<ul>
+<li>no-img-skin - a nicer appearance without requiring additional images</li>
+<li>old - looks similar to standard Grails scaffolding</li>
+<li>dojo - a simple AJAX skin (AJAX is only used on the list view; JS widgets 
+also used for date/time selectors). 
+Uses <a href="http://dojotoolkit.org">Dojo toolkit</a>; degrades to HTML</li>;
+you'll need to download it and install it under web-app/js/dojo.
+<li><strong>Upcoming:</strong> ext skin</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,1 @@
+${value ? java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT).format(value.getTime()) : ""}

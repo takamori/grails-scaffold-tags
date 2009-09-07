@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/grails-plugins/!svn/ver/53437/grails-scaffold-tags/trunk/src/skins/old/templates
+END
+list.gsp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/grails-plugins/!svn/ver/831/grails-scaffold-tags/trunk/src/skins/old/templates/list.gsp
+END
+show.gsp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/grails-plugins/!svn/ver/53437/grails-scaffold-tags/trunk/src/skins/old/templates/show.gsp
+END
+create.gsp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/grails-plugins/!svn/ver/831/grails-scaffold-tags/trunk/src/skins/old/templates/create.gsp
+END
+edit.gsp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/grails-plugins/!svn/ver/53433/grails-scaffold-tags/trunk/src/skins/old/templates/edit.gsp
+END

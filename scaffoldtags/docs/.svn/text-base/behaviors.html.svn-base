@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Grails Plugins by Daiji Takamori</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="shortcut icon" href="images/shortcuticon.png" type="image/png" />
+
+<link rel="stylesheet" href="css/main.css"></link>
+</head>
+<body>
+<h1><img alt="[grails plugin]" src="images/grails-plugin.png" height=50 /> ScaffoldTags Standard Behaviors</h1>
+<p>
+<a href="index.html">Index</a>
+</p>
+
+<h3>Contents</h3>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#templateTypes">Template types</a></li>
+<li><a href="#classes">Supported class types</a></li>
+<li><a href="#showStyles">Show styles</a></li>
+<li><a href="#listStyles">List styles</a></li>
+<li><a href="#editorStyles">Editor styles</a></li>
+</ul>
+
+<a name="overview">
+<h2>Overview</h2>
+</a>
+<p>
+This page documents how the standard scaffold renderers provided
+with the plugin behaves.  You can copy and/or extend them for your own needs.
+You can also just copy only the parts that you'd like to modify, 
+as any renderers not provided will have defaulted behavior 
+provided by the plugin's standard scaffold renderers.
+In general, the renderers are designed to display similar to the default 
+rendering of the standard Grails scaffolding output, for the sake
+of consistency.  In the future, alternate renderer sets will be made
+available.
+</p>
+
+<a name="templateTypes">
+<h2>Template types</h2>
+</a>
+<p>
+The standard renderers provide for show, list, and editor templates.
+The editor templates are dual-purpose, as they can be used both for 
+edit actions as well as create actions.
+</p>
+
+<a name="classes">
+<h2>Supported class types</h2>
+</a>
+<p>
+The following class types are supported by the standard renderers.
+When a primitive is specified, a template named using the associated 
+wrapper class will match the primitive.  For instance, byte[] will 
+match a template using array_java.lang.Byte.
+<ul>
+<li>show - java.util.Date and java.lang.Object</li>
+<li>list - java.util.Date and java.lang.Object</li>
+<li>editor - java.lang.Byte[], java.lang.Boolean, java.lang.Character, 
+java.lang.Number, java.net.URL, java.util.Calendar, java.util.Currency,
+java.util.Date, java.util.Locale, and java.util.TimeZone, and embedded beans</li>
+</ul>
+</p>
+
+<a name="showStyles">
+<h2>Show styles</h2>
+</a>
+<p>
+The following styles attributes can be used with a show template.
+</p>
+<h3>Many-type relations</h3>
+<ul>
+<li>widget - if set to 'embedded', will display the individual 
+instances using a show template, rather than displaying
+the objects with links in a list</li>
+</ul>
+<h3>One-type relations</h3>
+<ul>
+<li>widget - if set to 'embedded', will display the 
+instance using a show template, rather than displaying
+the object using a link</li>
+</ul>
+<h3>Object</h3>
+<p>By default, displays the toString() output. </p>
+<ul>
+<li>widget - if set to 'embedded', will display the embedded
+bean using a show template and bean introspection</li>
+</ul>
+
+<a name="listStyles">
+<h2>List styles</h2>
+</a>
+<p>
+The following styles attributes can be used with a list template.
+</p>
+<h3>Many-type relations</h3>
+<ul>
+<li>widget - if set to 'embedded', will display the individual 
+instances using a list template, rather than displaying
+the objects with links in a list</li>
+</ul>
+<h3>One-type relations</h3>
+<ul>
+<li>widget - if set to 'embedded', will display the 
+instance using a show template, rather than displaying
+the object using a link</li>
+</ul>
+<h3>Object</h3>
+<p>By default, displays the toString() output. </p>
+<ul>
+<li>widget - if set to 'embedded', will display the embedded
+bean using a list template and bean introspection</li>
+</ul>
+
+<a name="editorStyles">
+<h2>Editor styles</h2>
+</a>
+<p>
+The following styles attributes can be used with an editor template.
+</p>
+<h3>Many-to-many type relations</h3>
+<p>By default, will display the values using a UL list, and a selector
+to add additional values. (No mechanism for removal yet)</p>
+<ul>
+<li>hidden - if set to true, will not display any values but will still
+generate values in the form.</li>
+<li>widget - if set to 'list', will display a multi-select list from
+which the values can be selected, rather than only displaying a UL list
+of values. </li>
+<li>readonly - if set to true, will not provide a mechanism for 
+adding additional values but will still submit existing values.</li>
+</ul>
+<h3>Many-to-one type relations</h3>
+<p>By default, will display an item selector</p>
+<ul>
+<li>hidden - if set to true, will not display the value but will 
+generate a hidden value in the form.</li>
+<li>readonly - if set to true, will not provide a mechanism for 
+changing the value but will still submit existing values.</li>
+</ul>
+<h3>One-to-many type relations</h3>
+<p>By default, will display the values using a UL list, and a link
+by which to create new instances. (Removal through standard CRUD 
+pages)</p>
+<ul>
+<li>hidden - if set to true, will not display any values but will still
+generate values in the form.</li>
+<li>widget - if set to 'embedded', will permit editing the embedded
+instances using an editor template</li>
+<li>readonly - if set to true, will not provide a mechanism for 
+adding additional values but will still submit existing values.</li>
+</ul>
+<h3>One-to-one type relations</h3>
+<p>By default, will display an item selector</p>
+<ul>
+<li>hidden - if set to true, will not display the value but will still
+generate a hidden value in the form.</li>
+<li>widget - if set to 'embedded', will permit editing the embedded
+instance using an editor template</li>
+<li>readonly - if set to true, will not provide a mechanism for 
+adding additional values but will still submit existing values.</li>
+</ul>
+<h3>byte[]</h3>
+<p>Displays a file browse button</p>
+<h3>boolean</h3>
+<p>Displays a g:checkbox using styles specified by the style attributes</p>
+<h3>char</h3>
+<p>Displays a 1-character textfield</p>
+<h3>Number</h3>
+<p>By default, displays a textfield.</p>
+<p> 
+If a constraints map is specified, and a constraint "range" or "size"
+is specified, then a selector of from .. to is displayed.
+</p>
+<p>
+If no constraints map is specified but the object is of type byte,
+then a selector of -128 to 127 is displayed</p>
+<h3>Object</h3>
+<p>By default, displays the toString() output. </p>
+<ul>
+<li>widget - if set to 'embedded', will permit editing the embedded
+instance specified via bean interfaces using an editor template</li>
+</ul>
+<h3>String</h3>
+<p>By default, displays a textfield. </p>
+<ul>
+<li>constraint inList - if specified, then will display a selector
+of items from which to select</li>
+<li>widget - if set to 'richtext', will invoke the g:richTextEditor
+tag with a basepath of js/fckeditor.  
+If set to 'textarea', will display an HTML textarea element.
+If set to 'password', will display an INPUT of type 'password'.
+</li>
+<li>constraint maxSize - if specified will set a maxlength attribute
+on a resulting HTML INPUT element (not used fo widget type richtext).</li>
+<li>readonly - if set to true, will set the HTML INPUT element
+to readonly (not used fo widget type richtext).</li>
+<li>you can also specify additional attributes to the HTML element 
+through the style attribute map (only when an INPUT element is 
+displayed)</li>
+</ul>
+<h3>URL</h3>
+<p>By default, displays a textfield. </p>
+<ul>
+<li>constraint inList - if specified, then will display a selector
+of items from which to select</li>
+<li>widget - 
+If set to 'textarea', will display an HTML textarea element.
+If set to 'password', will display an INPUT of type 'password'.
+</li>
+<li>constraint maxSize - if specified will set a maxlength attribute
+on a resulting HTML INPUT element (not used fo widget type richtext).</li>
+<li>readonly - if set to true, will set the HTML INPUT element
+to readonly (not used fo widget type richtext).</li>
+<li>you can also specify additional attributes to the HTML element 
+through the style attribute map (only when an INPUT element is 
+displayed)</li>
+</ul>
+<h3>Calendar</h3>
+<p>By default, displays using &lt;g:datePicker&gt;. </p>
+<ul>
+<li>readonly - if set to true, will not provide a means to
+edit the date.</li>
+<li>you can also specify attributes to the datePicker tag through
+the style attribute map</li>
+</ul>
+<h3>Currency</h3>
+<p>By default, displays using &lt;g:currencySelect&gt;. </p>
+<ul>
+<li>you can specify attributes to the currencySelect tag through
+the style attribute map</li>
+</ul>
+<h3>Date</h3>
+<p>By default, displays using &lt;g:datePicker&gt;. </p>
+<ul>
+<li>readonly - if set to true, will not provide a means to
+edit the date.</li>
+<li>you can also specify attributes to the datePicker tag through
+the style attribute map</li>
+</ul>
+<h3>Locale</h3>
+<p>By default, displays using &lt;g:localeSelect&gt;. </p>
+<ul>
+<li>you can specify attributes to the localeSelect tag through
+the style attribute map</li>
+</ul>
+<h3>TimeZone</h3>
+<p>By default, displays using &lt;g:timeZoneSelect&gt;. </p>
+<ul>
+<li>you can specify attributes to the timeZoneSelect tag through
+the style attribute map</li>
+</ul>
+
+</body>
+</html>

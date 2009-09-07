@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Grails Plugins by Daiji Takamori</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="shortcut icon" href="images/shortcuticon.png" type="image/png" />
+
+<link rel="stylesheet" href="css/main.css"></link>
+</head>
+<body>
+<h1><img alt="[grails plugin]" src="images/grails-plugin.png" height=50 /> ScaffoldTags Template API</h1>
+<p>
+<a href="index.html">Index</a>
+</p>
+
+<h3>Contents</h3>
+<ul>
+<li><a href="#domainTemplate">Domain-rendering templates</a></li>
+<li><a href="#domainIteration">Domain-iteration</a></li>
+<li><a href="#associationTemplate">Association-rendering templates</a></li>
+<li><a href="#typeTemplate">Type-rendering templates</a></li>
+<li><a href="#examples">An example template</a></li>
+</ul>
+
+<a name="domainTemplate">
+<h2>Domain-renderers</h2>
+</a>
+<p>
+Domain-rendering templates handle the display of a domain for a given action.
+</p>
+<p>
+The template should be named:
+<ul>
+<li><em>template</em>/domain.gsp for generic domain 
+<em>template</em>-type renderer (e.g. editor/domain.gsp)</li>
+<li><em>template</em>/<em>domainClassName</em>.gsp for 
+a <em>template</em>-type renderer 
+of a <em>domainClassName</em> domain (e.g. show/User.gsp)</li>
+</ul>
+</p>
+<h3>Variables</h3>
+<ul>
+<li>domain - the domain class being displayed</li>
+<li>name - the base name used for the HTML field name for each domain property</li>
+<li>value - the value of the domain object</li>
+<li>style - a map indicating how to display various domain fields</li>
+<li>except - a list of properties that should not be displayed.  
+This parameter should be overridden when the only parameter is specified.</li>
+<li>exceptWhen - a closure that will eliminate some properties from being displayed.
+This parameter should be overridden when the only parameter is specified.</li>
+<li>order - a list specifying the order of specific fields.  
+This parameter should be overridden when the only parameter is specified.</li>
+<li>only - a list specifying the only fields that should be displayed.
+The fields should be displayed in the order specified in the list.</li>
+</ul>
+
+<a name="domainIteration">
+<h2>Domain iteration</h2>
+</a>
+<p>
+Iteration on the domain fields can be performed using the
+<a href="tagApi.html#eachDomainProperty">&lt;g:eachDomainProperty&gt;</a> tag.
+</p>
+<h3>Iterator struct</h3>
+<ul>
+<li>prop - a GrailsDomainClassProperty instance. 
+<em>Note: this may be subject to change in future releases.</em></li>
+<li>name - the name of the domain property</li>
+<li>value - the value of the domain property</li>
+<li>style - the style to be applied to the domain property</li>
+</ul>
+
+<a name="associationTemplate">
+<h2>Domain-association renderers</h2>
+</a>
+<p>
+Domain-association rendering templates handle the display of 
+a given domain association for a given action.
+</p>
+<p>
+The template should be named:
+<ul>
+<li><em>template</em>/<em>relationType</em>.gsp for generic 
+<em>relationType</em> domain relation
+<em>template</em>-type renderer 
+(e.g. editor/one-one.gsp, list/many.gsp, show/one-many.gsp)</li>
+<li><em>template</em>/<em>relationType</em>_<em>domainClassName</em>.gsp 
+for a <em>template</em>-type renderer 
+of a <em>domainClassName</em> domain <em>relationType</em> relation 
+(e.g. show/one-one_User.gsp, editor/many-many_Authority.gsp,
+list/many_Job.gsp)</li>
+</ul>
+</p>
+<h3>Variables</h3>
+<ul>
+<li>name - the base name used for the HTML field name for each domain property</li>
+<li>prop - the domain property being displayed</li>
+<li>referencedDomain - the domain class referenced by the association.
+Useful in many-type associations</li>
+<li>referencedController - the controller referenced by the association.
+Useful for creating links to perform an action on the associated object.</li>
+<li>domainReference - the field used to reference back to this object
+by the associated domain.  Useful in bidirectional associations
+when creating an associated object.</li>
+<li>domainId - the id of the domain instance being displayed.
+Useful in bidirectional associations when creating an associated 
+object</li>
+<li>value - the value of the domain object</li>
+<li>constraints - the GORM constraints applied to this property</li>
+<li>style - an attribute-value map indicating how to display this 
+property</li>
+</ul>
+
+<a name="typeTemplate">
+<h2>Type renderers</h2>
+</a>
+<p>
+Type rendering templates handle the display of a given class and its
+subclasses for a given action.
+</p>
+<h3>Variables</h3>
+<ul>
+<li>name - the base name used for the HTML field name for each domain property</li>
+<li>type - the type of the data being displayed</li>
+<li>value - the value of the domain object</li>
+<li>constraints - the GORM constraints applied to this object</li>
+<li>style - an attribute-value map indicating how to display this 
+property</li>
+</ul>
+
+<a name="examples">
+<h2>Examples</h2>
+</a>
+
+<h3>a many-to-one editor</h3>
+The following illustrates how the basic many-to-one editor
+is implemented in scaffolding/editor/many-one.gsp.  
+<ol>
+<li>If a "hidden" style attribute is set to true, 
+a hidden field is generated</li>
+<li>If a "readonly" style attribute is set to true,
+a hidden field is generated, and the value is displayed</li>
+<li>Otherwise, a selector is displayed for the referenced domain
+class, using the HTML name <em>name</em>.id</li>
+</ol>
+<pre>
+&lt;g:if test="${style?.hidden}"&gt;
+    &lt;input type="hidden" 
+           name='${name}.id' 
+           value="${value?.id}" /&gt;
+&lt;/g:if>
+&lt;g:elseif test="${style?.readonly}"&gt;
+    &lt;input type="hidden" 
+           name='${name}.id' 
+           value="${value?.id}" /&gt;${value}
+&lt;/g:elseif>
+&lt;g:else>
+    &lt;g:select optionKey="id" 
+              from="${referencedDomain.list()}" 
+              name='${name}.id' 
+              value="${value?.id}" /&gt;
+&lt;/g:else&gt;
+</pre>
+
+</body>
+</html>

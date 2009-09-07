@@ -1,0 +1,263 @@
+/*
+ * The overall page
+ */
+body {
+    background: #333377;
+    font-family: Trebuchet MS, Arial, sans-serif;
+    font-size: 12pt;
+    margin: 0px;
+    padding: 0px;
+    border: 0px none;
+}
+.header {
+    color: #333333;
+    background: #DDDDEE;
+    padding: 0px 15px 10px 15px;
+}
+.page {
+    background: #222222;
+    margin: 0px 30px 0px 30px;
+    border: 0px none;
+    padding: 0px 2px 2px 2px;
+}
+.pageInner {
+    background: #F5F5F5;
+    padding: 0px 0px 5px 0px;
+}
+.body {
+    background: #F8F8F8;
+    padding: 10px;
+}
+form {
+    margin: 0px;
+}
+
+/* The header area */
+.logo {
+    font-family: Arial Black, sans-serif;
+    font-weight: normal;
+    text-shadow: grey 5px 5px;
+    padding: 15px 0px 0px 0px;
+    margin: 0px;
+}
+.skinDescription {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 12px;
+    padding: 0px 0px 0px 5px;
+}
+
+/*
+ * The menu bar
+ */
+.nav {
+    border-top: 1px solid #D4D4EE;
+    border-bottom: 2px solid #CCCCEE;
+    background: #D8D8EE;
+    font-family: Georgia, Times Roman, serif;
+    font-size: 10pt;
+    padding: 2px 5px 1px 5px;
+    margin: 0px 0px 3px 0px;
+}
+.menuButton a {
+    color: #3E3E3E;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 10pt;
+    border: 1px solid #D8D8EE;
+    padding: 0px 3px 0px 3px;
+}
+.menuButton a:hover {
+    background-color: #E4E4EE;
+    color: #111111;
+    border-color: #C0C0FF;
+}
+
+/*
+ * The page title
+ */
+.titleSection {
+    margin: .5em 7px .5em 7px;
+}
+.title {
+    font-size: 18pt;
+    font-family: Georgia, Arial, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: #555566;
+    display: inline;
+    margin: 0px;
+    padding: 5px 0px 0px 0px;
+}
+.pageActions {
+    text-align: right;
+    display: inline;
+    margin: 0em 1em 0em 1em;
+    border: 1px solid #EEEEEE;
+    padding: 2px 2px 2px 2px;
+}
+
+/* messages */
+.message {
+    border: 1px solid #DDAA00;
+    background-color: #F8F8F0;
+    padding: 0px 0.3em 0px 0.3em;
+    font-weight: bold;
+    font-size: 10pt;
+    margin: 10px 0px 10px 0px;
+}
+.errors {
+    border: 1px solid #CC1111;
+    background-color: #F8F4F4;
+    padding: 0px 0.3em 0px 0.3em;
+    font-weight: bold;
+    font-size: 10pt;
+    margin: 10px 0px 10px 0px;
+}
+
+/* The footer */
+.signature {
+    font-size: smaller;
+    color: #333333;
+    border-top: 1px solid #333333;
+    padding: 5px 0px 5px 10px;
+    margin: 10px 0px 0px 0px;
+    background: #F3F3F3;
+}
+.signatureButton {
+    height: 1.75em;
+    vertical-align: bottom;
+    border: 1px solid #777777;
+}
+a:hover .signatureButton {
+    border: 1px solid #AAAAFF;
+}
+
+/*
+ * The action links
+ */
+.actionButton a {
+    text-decoration: none;
+    font-size: 10pt;
+    color: #FCFCFC;
+    text-transform: lowercase;
+    border: 1px solid #E0E0E0;
+    padding: 0px 3px 1px 3px;
+    background-color: #A4A4A4;
+}
+.actionButton a:hover {
+    text-decoration: underline;
+    color: #FFFFFF;
+    border: 1px solid #AA4444;
+    background-color: #888888;
+}
+
+/*
+ * The pagination controls
+ */
+.paginateButtons {
+    margin: 3px 0px 3px 0px;
+}
+.paginateButtons a {
+    padding: 2px 4px 2px 4px;
+    background-color: #A4A4A4;
+    border: 1px solid #EEEEEE;
+    text-decoration: none;
+    font-size: 10pt;
+    font-variant: small-caps;
+    color: #EEEEEE;
+}
+.paginateButtons a:hover {
+    text-decoration: underline;
+    background-color: #888888;
+    border: 1px solid #AA4444;
+    color: #FFFFFF;
+}
+
+/*
+ * The list view
+ */
+.listScrollWindow {
+    overflow: scroll;
+    width: 100%;
+}
+table.list {
+    margin: 0px 3px 3px 3px;
+    font-size: 10pt;
+    white-space: nowrap;
+    border-spacing: 1px;
+    border-width: 1px;
+}
+table.list td {
+    margin: 0px;
+}
+table.list th {
+    margin: 0px;
+    background-color: #F4F4F4;
+    color: #333333;
+}
+table.list td.actionButtons {
+    background-color: #E0E0E0;
+}
+table.list .actionButton {
+    padding: 0px;
+}
+table.list th.property {
+    background-color: #CCCCCC;
+    padding: 0px 6px 0px 6px;
+    border-top: 1px solid #C9C9C9;
+    border-bottom: 1px solid #C0C0C0;
+    white-space: nowrap;
+}
+table.list td.property {
+    text-align: center;
+    background-color: #F0F0F0;
+    border-bottom: 1px solid #DDDDDD;
+    border-right: 1px solid #EEEEEE;
+    white-space: nowrap;
+}
+
+/* edit/show/create views */
+.prop#id {
+    text-align: center;
+    margin: 15px 0px 0px 0px;
+}
+.dialog {
+    background-color: #EEEEEE;
+    margin: 0px 75px 20px 75px;
+    font-size: 10pt;
+    border: 1px solid #CCCCCC;
+    padding: 2px 12px 2px 12px;
+    display: table;
+}
+.dialog table {
+    font-size: 10pt;
+}
+th.name {
+    text-align: left;
+    color: #3E3E3E;
+}
+td.value {
+    border-bottom: 1px solid #E6E6E6;
+    padding: 0px 10px 0px 10px;
+}
+.buttons {
+    text-align: center;
+    border: 1px solid #DDDDDD;
+}
+.buttons .button {
+    padding: 2px;
+}
+.buttons .button input {
+    color: #FCFCFC;
+    text-transform: lowercase;
+    border: 1px solid #E0E0E0;
+    padding: 0px 3px 1px 3px;
+    background-color: #A4A4A4;
+}
+.buttons .button input:hover {
+    text-decoration: underline;
+    color: #FFFFFF;
+    border: 1px solid #AA4444;
+    background-color: #888888;
+}

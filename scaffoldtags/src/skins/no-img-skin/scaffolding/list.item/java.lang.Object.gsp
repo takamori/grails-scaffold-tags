@@ -1,0 +1,1 @@
+<g:if test="${value}">${value.encodeAsHTML()}</g:if><g:else>&nbsp;</g:else>

@@ -1,0 +1,29 @@
+body {
+	font-family:Trebuchet MS,Verdana,Arial,Helvetica,sans-serif;
+}
+
+h1 {
+	font-family: Arial Black,Verdana,Arial,Helvetica,sans-serif;
+}
+
+.serif {
+	font-family: Georgia,Garamond,serif;
+}
+
+.note {
+	font-family: Georgia,Garamond,serif;
+	font-style: italic;
+	font-size: 0.8em;
+}
+
+a {
+	font-weight: bold;
+}
+
+a:link, a:visited, a:active {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}

@@ -1,0 +1,1 @@
+<g:richTextEditor basepath="js/fckeditor/" name='${name}' value="${value}" />

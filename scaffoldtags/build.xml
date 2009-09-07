@@ -1,0 +1,48 @@
+<project name="scaffoldtags" default="package-plugin">
+
+    <condition property="grails" value="grails.bat">
+        <os family="windows"/>
+    </condition>
+    <property name="grails" value="grails" />
+    <property name="plugin.version" value="0.7.2" />
+	<property name="plugin.zip" value="grails-scaffold-tags-${plugin.version}.zip" />
+	<property name="install.dir" value="" />
+
+	<!-- ================================= 
+          target: clean
+         ================================= -->
+    <target name="clean" description="--> Cleans the plugin directory structure">
+		<exec executable="${grails}" failonerror="true">
+			<arg value="clean"/>
+		</exec>
+    	<delete file="${basedir}/${plugin.zip}"></delete>
+    </target>
+
+	<!-- ================================= 
+          target: package-plugin
+         ================================= -->
+    <target name="package-plugin" description="--> Creates a WAR of a Grails application">
+        <exec executable="${grails}" failonerror="true">
+			<arg value="package-plugin"/>
+		</exec>
+    </target>
+	
+	<!-- ================================= 
+          target: test
+         ================================= -->
+    <target name="test" description="--> Run a Grails applications unit tests">
+		<exec executable="${grails}" failonerror="true">
+			<arg value="test-app"/>
+		</exec>
+    </target>
+	
+	<!-- ================================= 
+          target: install
+         ================================= -->
+    <target name="install" description="--> The install target (initially empty)">
+		<exec executable="${grails}" failonerror="true" dir="${install.dir}">
+			<arg value="install-plugin"/>
+			<arg value="${basedir}/${plugin.zip}"/>
+		</exec>
+    </target>
+</project>
