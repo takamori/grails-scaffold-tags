@@ -1,4 +1,11 @@
-VERSION: 0.7.2
+VERSION: 0.7.3
+
+Changes since 0.7.2:
+- Fixed the install-skin script.  Thanks to J. Barmash for notifying me.
+- added tests for g:invokeTag
+- g:invokeTag no longer can takes a body as a tag attribute (it must be nested; and it wasn't working anyway)
+- g:invokeTag no longer executes the body if invoking a tag which does not take a body (to match actual Grails behavior)
+- Fixed g:invokeTag to no longer pass the tag name to the tag being invoked
 
 Changes since 0.7.1:
 - fixed issues that prevented sample app from working against Grails 1.1.1

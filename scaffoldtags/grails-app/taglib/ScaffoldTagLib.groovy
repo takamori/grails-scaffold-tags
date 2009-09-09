@@ -26,7 +26,7 @@ import org.codehaus.groovy.grails.commons.GrailsClass
  * @since 08-Mar-2007
  */
 class ScaffoldTagLib {
-    private static final VERSION = "0.7.2"
+    private static final VERSION = "0.7.3"
 	private static final Log LOG = LogFactory.getLog(ScaffoldTagLib.class)
     private static final String PATH_TO_VIEWS = "/WEB-INF/grails-app/views";
     private static final String PLUGIN_PATH_TO_VIEWS = "/WEB-INF/plugins/scaffold-tags-${VERSION}/grails-app/views";

@@ -22,39 +22,34 @@
  */
 class InvokeTagLib {
     /**
+     * <p>
      * Invokes a tag using specified params; useful when you want dynamic tags from a template
-     * A body can either be specified as an attribute or as the nested body
+     * A body can be specified as the nested body.   Attributes can either be specified directly
+     * or in a map passed in as attrs (see examples below).
+     * </p>
      *
-     * Example:
-     * <g:invokeTag tag="datePicker" attrs="${attrs}"/>
-     * <g:invokeTag tag="specialDisplayer" attrs="${attrs}" body="${content}"/>
+     * <p>
+     * Examples:
+     * <pre>
+     *  &lt;g:invokeTag tag="datePicker" name="fieldname" value="${value}" /&gt;
+     *  &lt;g:invokeTag tag="datePicker" attrs="${attrs}" /&gt;
+     *  &lt;g:invokeTag tag="specialDisplayer" attrs="${attrs}" &gt; ....[body]... &lt;/g:invokeTag&gt;
+     * </pre>
+     * </p>
      */
     def invokeTag = { attrs, body ->
-    	def tag = attrs.tag
-        if (!tag) {
+    	def tagName = attrs.tag
+        if (!tagName) {
             throwTagError("Tag [invokeTag] is missing required attribute [tag]")
         }
-    	def tagAttrs = attrs.attrs
+    	def tagAttrs = attrs.attrs ? attrs.attrs : [:]
     	attrs.each {k, v ->
-    		if (!["attrs", "body"].contains(k)) {
+    		if (!["tag", "attrs"].contains(k)) {
     		    tagAttrs[k] = v
     		}
     	}
-        if (body) {
-            def tagOut = invokeTagHelper(tag, tagAttrs, body)
-            if (tagOut) out << tagOut
-        } else {
-            def tagOut = invokeTagHelper(tag, tagAttrs, attrs.body)
-            if (tagOut) out << tagOut
-        }
-    }
- 
-    /**
-     * Convenience closure.
-     * Executes a tag with the specified tag name and attributes, 
-     * and nesting the body if supported
-     */
-    private invokeTagHelper = { tagName, attrs, body ->
+    	
+    	// Identify and execute the tag
         def tagLib = grailsAttributes.getTagLibraryForTag(request,response,tagName)
         if (!tagLib) {
             throwTagError("Tag [invokeTag] cannot find taglib for tag ${tagName}")
@@ -63,20 +58,18 @@ class InvokeTagLib {
             if (tag instanceof Closure) {
                 tag = tag.clone()
                 if (tag.getParameterTypes().length == 1) {
-                    def tagOut = tag( attrs )
-		            if (tagOut) out << tagOut
-                    if (body != null) {
-                        def bodyOut = body()
-                        if (bodyOut) out << bodyOut
-                    }
+                    // Execute the tag with attributes, and ignore the body
+                    def tagOut = tag( tagAttrs )
+		            if (tagOut && !(tagOut instanceof PrintWriter)) out << tagOut
                 } else if (tag.getParameterTypes().length == 2) {
-                    def tagOut = tag( attrs, body )
-                    if (tagOut) out << tagOut
+                    // Execute the tag with attributes, passing the nested body
+                    def tagOut = tag( tagAttrs, body )
+                    if (tagOut && !(tagOut instanceof PrintWriter)) out << tagOut
                 } else {
-                    throwTagError("Tag [invokeTag] cannot execute ${tagName}; not implemented as a tag")
+                    throwTagError("Tag [invokeTag] cannot execute ${tagName}; not implemented as a 1 or 2 parameter closure")
                 }
             } else {
-                throwTagError("Tag [invokeTag] cannot execute ${tagName}; not implemented as a tag")
+                throwTagError("Tag [invokeTag] cannot execute ${tagName}; not implemented as a closure")
             }
         }
     }

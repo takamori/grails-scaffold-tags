@@ -6,7 +6,7 @@
 // You can use 'Ant' to access a global instance of AntBuilder
 //
 // For example you can create directory under project tree:
-// Ant.mkdir(dir:"C:\Daiji\Code\Web/plugin-0.5.6/grails-app/jobs")
+// Ant.mkdir(dir:"C:\grails/plugin-0.5.6/grails-app/jobs")
 //
 
 Ant.property(environment:"env")

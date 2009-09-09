@@ -26,7 +26,7 @@ grailsHome = Ant.antProject.properties."environment.GRAILS_HOME"
 includeTargets << new File ( "${grailsHome}/Init.groovy" )  
 
 target ('default': "Installs a ScaffoldTags skin") {
-    version = "0.7.1.1"
+    version = "0.7.3"
     pluginHome = "${pluginsHome}/scaffold-tags-${version}" 
     pluginSkins = "${pluginHome}/src/skins"
     appSkins = "${basedir}/src/skins"
@@ -166,7 +166,6 @@ target ('default': "Installs a ScaffoldTags skin") {
 	    }
     }
 	if (doCopy) {
-		Ant.input(message: "Press Enter to begin copying files:")
 	    sources.each { sourceType, sourcePath ->
 			sourceDir = new File(sourcePath)
 		    if (sourceDir.exists() &&
