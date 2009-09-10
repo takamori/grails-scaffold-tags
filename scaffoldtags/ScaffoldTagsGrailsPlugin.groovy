@@ -25,7 +25,7 @@
   * @since March 25, 2007
   */
 class ScaffoldTagsGrailsPlugin {
-	def version = "0.7.2"
+	def version = "0.7.3"
 	def dependsOn = [:]
     def author="Daiji Takamori"
     def authorEmail="dt_02138@yahoo.com"
@@ -40,7 +40,7 @@ and dynamic generation to how views of domain objects are generated.
 Skin support makes it possible to transition between multiple views 
 of the application.
 """
-	def documentation="http://grails.org/ScaffoldTags+Plugin"
+	def documentation="http://grails.org/plugin/scaffold-tags"
 	
 	def doWithSpring = {
 	}   

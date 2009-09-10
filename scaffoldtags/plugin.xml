@@ -12,7 +12,7 @@ and dynamic generation to how views of domain objects are generated.
 Skin support makes it possible to transition between multiple views 
 of the application.
 </description>
-  <documentation>http://grails.org/ScaffoldTags+Plugin</documentation>
+  <documentation>http://grails.org/plugin/scaffold-tags</documentation>
   <resources>
     <resource>ScaffoldTagLib</resource>
     <resource>InvokeTagLib</resource>

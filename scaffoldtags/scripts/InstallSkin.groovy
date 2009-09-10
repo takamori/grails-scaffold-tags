@@ -23,7 +23,7 @@
  */
 
 grailsHome = Ant.antProject.properties."environment.GRAILS_HOME"
-includeTargets << new File ( "${grailsHome}/Init.groovy" )  
+includeTargets << new File ( "${grailsHome}/scripts/Init.groovy" )  
 
 target ('default': "Installs a ScaffoldTags skin") {
     version = "0.7.3"
