@@ -26,11 +26,12 @@ import org.codehaus.groovy.grails.commons.GrailsClass
  * @since 08-Mar-2007
  */
 class ScaffoldTagLib {
-    private static final VERSION = "0.7.3"
-	private static final Log LOG = LogFactory.getLog(ScaffoldTagLib.class)
-    private static final String PATH_TO_VIEWS = "/WEB-INF/grails-app/views";
-    private static final String PLUGIN_PATH_TO_VIEWS = "/WEB-INF/plugins/scaffold-tags-${VERSION}/grails-app/views";
-	
+    private static final VERSION = "0.7.4"
+    private static final Log LOG = LogFactory.getLog(ScaffoldTagLib.class)
+    private static String PATH_TO_VIEWS = "/WEB-INF/grails-app/views";
+    private static String PLUGIN_PATH_TO_VIEWS = "/WEB-INF/plugins/scaffold-tags-${VERSION}/grails-app/views";
+    private static boolean initPaths = false
+
     /** Primitive class translation map */
     private static final classTranslations = [(Boolean.TYPE): Boolean.class,
                                         (Character.TYPE): Character.class,
@@ -711,15 +712,31 @@ class ScaffoldTagLib {
      *        /scaffolding/{view}
      *        {pluginPath}/scaffolding/{view}
      */
-    private findView(view) {
-        // There needs to be a better way to do the path lookup
-        String controllerUri = grailsAttributes.getControllerUri(request)
-        def viewpaths = ["${PATH_TO_VIEWS}${controllerUri}", 
-                          "${PATH_TO_VIEWS}/scaffolding", 
-                          "${PLUGIN_PATH_TO_VIEWS}/scaffolding"]
-        // println "searching for ${view} in ${viewpaths}"
-	    def ctx = grailsAttributes.applicationContext
-	    def resourceLoader = ctx.containsBean('groovyPageResourceLoader') ? ctx.groovyPageResourceLoader : ctx
+   private findView(view) {
+	   // There needs to be a better way to do the path lookup
+	   String controllerUri = grailsAttributes.getControllerUri(request)
+
+	   def ctx = grailsAttributes.applicationContext
+	   def resourceLoader = ctx.containsBean('groovyPageResourceLoader') ? ctx.groovyPageResourceLoader : ctx
+
+	   if (!initPaths) {
+	       if (!resourceLoader.getResource("${PATH_TO_VIEWS}/error.gsp").exists())
+		   {
+			   PATH_TO_VIEWS = PATH_TO_VIEWS.substring(
+				   PATH_TO_VIEWS.indexOf('/', 1) + 1)
+			   PLUGIN_PATH_TO_VIEWS = PLUGIN_PATH_TO_VIEWS.substring(
+				   PLUGIN_PATH_TO_VIEWS.indexOf('/', 1) + 1)
+			   if (!resourceLoader.getResource("${PLUGIN_PATH_TO_VIEWS}/scaffolding/editor/domain.gsp").exists()) {
+				   PLUGIN_PATH_TO_VIEWS = org.codehaus.groovy.grails.plugins.GrailsPluginUtils.pluginInfos.find { it.name == "scaffold-tags" }?.pluginDir.toString() + "/grails-app/views"
+				   PLUGIN_PATH_TO_VIEWS = "file:" + PLUGIN_PATH_TO_VIEWS.replace("/./", "/")
+			   }
+		   }
+           initPaths = true
+	   }
+	   def viewpaths = ["${PATH_TO_VIEWS}${controllerUri}",
+						"${PATH_TO_VIEWS}/scaffolding",
+						"${PLUGIN_PATH_TO_VIEWS}/scaffolding"]
+
         for (p in viewpaths) {
             if (view instanceof String  || view instanceof GString) {
                 def uri = "${p}/${view}"

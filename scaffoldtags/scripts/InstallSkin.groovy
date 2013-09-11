@@ -23,16 +23,16 @@
  */
 
 grailsHome = Ant.antProject.properties."environment.GRAILS_HOME"
-includeTargets << new File ( "${grailsHome}/scripts/Init.groovy" )  
+includeTargets << grailsScript("_GrailsInit")
 
 target ('default': "Installs a ScaffoldTags skin") {
-    version = "0.7.3"
-    pluginHome = "${pluginsHome}/scaffold-tags-${version}" 
-    pluginSkins = "${pluginHome}/src/skins"
+	depends(checkVersion, parseArguments)
+	
+    pluginSkins = "${scaffoldTagsPluginDir}/src/skins"
     appSkins = "${basedir}/src/skins"
-    
+
     // Obtain the skin name; make sure it exists
- 	skin = args
+ 	skin = argsMap.params[0]
  	first = true
  	while (first || !skin) {
  	    first = false
@@ -64,7 +64,7 @@ target ('default': "Installs a ScaffoldTags skin") {
  	            layouts: "${skinDir}/layouts",
  	            groovycode: "${skinDir}/src/groovy",
  	            css: "${skinDir}/css" ]
- 	targets = [ scaffolding: "${pluginHome}/grails-app/views/scaffolding",
+ 	myTargets = [ scaffolding: "${scaffoldTagsPluginDir}/grails-app/views/scaffolding",
  	            templates: "${basedir}/src/templates/scaffolding",
  	            layouts: "${basedir}/grails-app/views/layouts",
  	            groovycode: "${basedir}/src/groovy",
@@ -78,7 +78,7 @@ target ('default': "Installs a ScaffoldTags skin") {
 	sources.each { sourceType, sourcePath ->
 		sourceDir = new File(sourcePath)
 	    if (sourceDir.exists()) {
-	    	targetPath = targets[sourceType]
+	    	targetPath = myTargets[sourceType]
 	        targetDir = new File(targetPath)
 	    	
 	    	if (clearTargets.contains(sourceType)) {
@@ -92,8 +92,8 @@ target ('default': "Installs a ScaffoldTags skin") {
 	    	} else if (targetDir.exists()) {
 		    	// Prompt the user if an overwrite will occur
 	            def sources = sourceDir.list().toList()
-	            def targets = targetDir.list().toList()
-	            def overlap = sources?.intersect(targets)
+	            def myTargets = targetDir.list().toList()
+	            def overlap = sources?.intersect(myTargets)
 	            if (!overlap?.empty) {
 	                println "Warning: Pre-existing files found in ${targetDir}"
 	                def hasNewer = false
@@ -170,16 +170,16 @@ target ('default': "Installs a ScaffoldTags skin") {
 			sourceDir = new File(sourcePath)
 		    if (sourceDir.exists() &&
 	            (Ant.antProject.properties."skin.dir.${sourceType}.copy" != "n")) {
-		    	targetPath = targets[sourceType]
+		    	targetPath = myTargets[sourceType]
  		        if (Ant.antProject.properties."skin.dir.${sourceType}.delete" == "y") {
 		            println "Removing existing ${sourceType}..."
 		            Ant.delete(dir: targetPath)
 		        }
 				def overwrite = (Ant.antProject.properties."skin.dir.${sourceType}.overwrite" != "n")
 	    		if (overwrite) {
-	    		    println "Installing skin '${skin}' ${sourceType}..."
+	    		    println "Installing skin '${skin}' ${sourceType} into ${targetPath}..."
 	    		} else {
-					println "Installing only newer files in skin '${skin}' ${sourceType}..."
+					println "Installing only newer files in skin '${skin}' ${sourceType}into ${targetPath}..."
 	    		}
 		    	
 		    	// Create any directories that don't exist

@@ -4,7 +4,7 @@
         <os family="windows"/>
     </condition>
     <property name="grails" value="grails" />
-    <property name="plugin.version" value="0.7.3" />
+    <property name="plugin.version" value="0.7.4" />
 	<property name="plugin.zip" value="grails-scaffold-tags-${plugin.version}.zip" />
 	<property name="install.dir" value="" />
 

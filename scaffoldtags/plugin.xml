@@ -1,4 +1,4 @@
-<plugin name='scaffold-tags' version='0.7.3' grailsVersion='1.1.1 &gt; *'>
+<plugin name='scaffold-tags' version='0.7.4' grailsVersion='1.1.1 &gt; *'>
   <author>Daiji Takamori</author>
   <authorEmail>dt_02138@yahoo.com</authorEmail>
   <title>Adds tags to support fully-customizable &amp; dynamic scaffolding</title>

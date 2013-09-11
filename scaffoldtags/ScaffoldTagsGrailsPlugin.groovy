@@ -25,7 +25,7 @@
   * @since March 25, 2007
   */
 class ScaffoldTagsGrailsPlugin {
-	def version = "0.7.3"
+	def version = "0.7.4"
 	def dependsOn = [:]
     def author="Daiji Takamori"
     def authorEmail="dt_02138@yahoo.com"
