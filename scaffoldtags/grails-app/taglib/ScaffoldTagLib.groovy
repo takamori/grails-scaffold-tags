@@ -1,59 +1,47 @@
 /* Copyright 2007-2009 Daiji Takamori
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
-import groovy.lang.MetaClassRegistry
-import grails.util.GrailsUtil
-import org.codehaus.groovy.grails.commons.GrailsApplication
-import org.codehaus.groovy.grails.commons.GrailsClass
 
 /**
- * A scaffolding tag lib that can be used to simplify and standardize code in Grails views
+ * Simplifies and standardizes code in Grails views
  *
  * @author Daiji Takamori
  * @since 08-Mar-2007
  */
 class ScaffoldTagLib {
     private static final VERSION = "0.7.4"
-    private static final Log LOG = LogFactory.getLog(ScaffoldTagLib.class)
-    private static String PATH_TO_VIEWS = "/WEB-INF/grails-app/views";
-    private static String PLUGIN_PATH_TO_VIEWS = "/WEB-INF/plugins/scaffold-tags-${VERSION}/grails-app/views";
+    private static final Log LOG = LogFactory.getLog(ScaffoldTagLib)
+    private static String PATH_TO_VIEWS = "/WEB-INF/grails-app/views"
+    private static String PLUGIN_PATH_TO_VIEWS = "/WEB-INF/plugins/scaffold-tags-${VERSION}/grails-app/views"
     private static boolean initPaths = false
 
     /** Primitive class translation map */
-    private static final classTranslations = [(Boolean.TYPE): Boolean.class,
-                                        (Character.TYPE): Character.class,
-                                        (Void.TYPE): Void.class,
-                                        (Byte.TYPE): Byte.class,
-                                        (Short.TYPE): Short.class,
-                                        (Integer.TYPE): Integer.class,
-                                        (Long.TYPE): Long.class,
-                                        (Float.TYPE): Float.class,
-                                        (Double.TYPE): Double.class ]
+    private static final classTranslations = [(Boolean.TYPE): Boolean,
+                                              (Character.TYPE): Character,
+                                              (Void.TYPE): Void,
+                                              (Byte.TYPE): Byte,
+                                              (Short.TYPE): Short,
+                                              (Integer.TYPE): Integer,
+                                              (Long.TYPE): Long,
+                                              (Float.TYPE): Float,
+                                              (Double.TYPE): Double ]
 
 	/** Reference to the MetaClassRegistry */
-    private static final MetaClassRegistry metaClassRegistry
-    static {
-        try {
-            // 1.1 Groovy access to the MetaClassRegistry
-            metaClassRegistry = Class.forName("groovy.lang.GroovySystem").getMethod("getMetaClassRegistry", null ).invoke(null, null )
-        } catch (Exception e) {
-            // 1.0 Groovy access to the MetaClassRegistry
-	        metaClassRegistry = Class.forName("groovy.lang.MetaClassRegistry").newInstance();
-        }
-    }
+    private static final MetaClassRegistry metaClassRegistry = GroovySystem.getMetaClassRegistry()
 
     /**
      *  performs looping across the properties of a domain. Examples:
@@ -84,10 +72,10 @@ class ScaffoldTagLib {
         def application = grailsAttributes.getGrailsApplication()
         def domainClass
         if (domain instanceof Class) {
-            domainClass = getGrailsDomainClass(application, domain.name)
+            domainClass = application.getDomainClass(domain.name)
         } else {
             try {
-                domainClass = getGrailsDomainClass(application, domain)
+                domainClass = application.getDomainClass(domain)
                 domain = domainClass.clazz
             } catch (ClassNotFoundException e) {
                 throwTagError("Tag [eachDomainProperty] could not find class ${domain}")
@@ -104,7 +92,7 @@ class ScaffoldTagLib {
         } else {
             props = domainClass.properties.findAll {
                 String propName = it.name
-                return (propName != 'version' && 
+                return (propName != 'version' &&
                         (!constraints[propName] || constraints[propName]?.display) &&
                         (!except || !except.contains(propName)) &&
                         (!exceptWhen || !exceptWhen(it)))
@@ -147,7 +135,7 @@ class ScaffoldTagLib {
             if (bodyOut) out << bodyOut
         }
     }
-    
+
     /**
      *  renders a domain using customized views. The search path is: (1) the current view directory;
      *  (2) a view directory for the domain class; (3) a generic view under the _domain directory.
@@ -183,7 +171,7 @@ class ScaffoldTagLib {
         def application = grailsAttributes.getGrailsApplication()
         if (!(domain instanceof Class)) {
             try {
-                def domainClass = getGrailsDomainClass(application, domain)
+                def domainClass = application.getDomainClass(domain)
                 domain = domainClass.clazz
             } catch (ClassNotFoundException e) {
                 throwTagError("Tag [renderDomain] could not find class ${domain}")
@@ -214,7 +202,7 @@ class ScaffoldTagLib {
                         order: order ]
         executeTemplate(uri, binding)
     }
-    
+
     /**
      *  renders a domain property using customized views. Examples:
      *
@@ -242,17 +230,17 @@ class ScaffoldTagLib {
         def widgets = attrs.widgets
 
         // Lookup property by name if necessary
-        if (prop instanceof String) {
+        if (prop instanceof CharSequence) {
             if (!domain) {
                 throwTagError("Tag [renderProperty] is missing required attribute [domain] when prop is a string")
             }
             def application = grailsAttributes.getGrailsApplication()
             def domainClass
             if (domain instanceof Class) {
-                domainClass = getGrailsDomainClass(application, domain.name)
+                domainClass = application.getDomainClass(domain.name)
             } else {
                 try {
-                    domainClass = getGrailsDomainClass(application, domain)
+                    domainClass = application.getDomainClass(domain)
                     domain = domainClass.clazz
                 } catch (ClassNotFoundException e) {
                     throwTagError("Tag [renderProperty] could not find class ${domain}")
@@ -260,7 +248,7 @@ class ScaffoldTagLib {
             }
             prop = domainClass.getPropertyByName(prop)
         }
-        
+
         // Obtain information about the property
         def domainClass = prop.domainClass
         def beanName = domainClass.propertyName
@@ -270,7 +258,7 @@ class ScaffoldTagLib {
         if (widget) {
             suffix = "_${widget}"
         }
-        
+
          // Execute the appropriate template for this property
         def uri
         if (domainClass) {
@@ -279,7 +267,7 @@ class ScaffoldTagLib {
         while (!uri && prop.inherited) {
             domain = domain.superclass
             def application = grailsAttributes.getGrailsApplication()
-            domainClass = getGrailsDomainClass(application, domain.name)
+            domainClass = application.getDomainClass(domain.name)
             prop = domainClass.getPropertyByName(propertyName)
             uri = findView("${template}/${domainClass.name}.${propertyName}${suffix}.gsp")
         }
@@ -287,11 +275,11 @@ class ScaffoldTagLib {
             // Execute a property-specific template
             def constraints = domainClass.constrainedProperties[propertyName]
             def referencedDomain = prop.referencedDomainClass
-            def binding = [ domain: domain, 
+            def binding = [ domain: domain,
                             name: name,
-                            prop: prop, 
+                            prop: prop,
                             domainId: domainId,
-                            type: type, 
+                            type: type,
                             value: value,
                             widgets: widgets,
                             style: style,
@@ -301,10 +289,10 @@ class ScaffoldTagLib {
             executeTemplate(uri, binding)
         } else if (prop.association) {
             // Execute a relation template
-            def tagOut = renderRelation([template: template, 
-                            domain: domain, 
+            def tagOut = renderRelation([template: template,
+                            domain: domain,
                             name: name,
-                            prop: prop, 
+                            prop: prop,
                             domainId: domainId,
                             value: value,
                             widget: widget,
@@ -314,11 +302,11 @@ class ScaffoldTagLib {
         } else {
             // Execute a type template
             def constraints = domainClass.constrainedProperties[prop.name]
-            def tagOut = renderType([template: template, 
-                        domain: domain, 
-                        name: name, 
-                        type: type, 
-                        value: value, 
+            def tagOut = renderType([template: template,
+                        domain: domain,
+                        name: name,
+                        type: type,
+                        value: value,
                         constraints: constraints,
                         widget: widget,
                         widgets: widgets,
@@ -326,7 +314,7 @@ class ScaffoldTagLib {
             if (tagOut) out << tagOut
         }
     }
-     
+
     /**
      *  renders a domain relation property using customized views. Examples:
      *
@@ -357,17 +345,17 @@ class ScaffoldTagLib {
         def widgets = attrs.widgets
 
         // Lookup property by name if necessary
-        if (prop instanceof String) {
+        if (prop instanceof CharSequence) {
             if (!domain) {
                 throwTagError("Tag [renderRelation] is missing required attribute [domain] when prop is a string")
             }
             def application = grailsAttributes.getGrailsApplication()
             def domainClass
             if (domain instanceof Class) {
-                domainClass = getGrailsDomainClass(application, domain.name)
+                domainClass = application.getDomainClass(domain.name)
             } else {
                 try {
-                    domainClass = getGrailsDomainClass(application, domain)
+                    domainClass = application.getDomainClass(domain)
                     domain = domainClass.clazz
                 } catch (ClassNotFoundException e) {
                     throwTagError("Tag [renderRelation] could not find class ${domain}")
@@ -375,7 +363,7 @@ class ScaffoldTagLib {
             }
             prop = domainClass.getPropertyByName(prop)
         }
-        
+
         // Obtain information about the property
         def domainClass = prop.domainClass
         def propertyName = prop.name
@@ -399,15 +387,15 @@ class ScaffoldTagLib {
         if (widget) {
             suffix = "_${widget}"
         }
-        
+
         // Locate the template
         def domainName = domainClass?.propertyName
-        def uri = findUriForType(template, 
-                				["${relationType}_", "${simpleRelationType}_"], 
+        def uri = findUriForType(template,
+                				["${relationType}_", "${simpleRelationType}_"],
                 				clazz,
                 				suffix)
         if (!uri) {
-            uri = findView(["${template}/${relationType}${suffix}.gsp", 
+            uri = findView(["${template}/${relationType}${suffix}.gsp",
                             "${template}/${simpleRelationType}${suffix}.gsp"])
         }
         if (!uri) {
@@ -423,8 +411,8 @@ class ScaffoldTagLib {
         if (!backReference) {
             backReference = domainClass.propertyName
         }
-        def binding = [ name: name, 
-                        prop: prop, 
+        def binding = [ name: name,
+                        prop: prop,
                         referencedDomain: clazz,
                         referencedController: referencedDomain.propertyName,
                         domainReference: backReference,
@@ -435,7 +423,7 @@ class ScaffoldTagLib {
                         style: style ]
         executeTemplate(uri, binding)
     }
-    
+
     /** [Placeholder for future development]
      * renders a bean using customized views.  This is like renderType except that it supports
      * introspection into bean properties.  This is also like renderDomain except that it supports
@@ -444,9 +432,9 @@ class ScaffoldTagLib {
      * and to have this be a convenience tag
      * /
     def renderBean = { attrs ->
-    
+
     }*/
-    
+
     /**
      * performs looping across the properties of a bean. This is like eachDomainProperty except that
      * it supports bean properties.
@@ -465,7 +453,7 @@ class ScaffoldTagLib {
 	    def widgets = attrs.widgets // custom views
 	    def style = attrs.style // custom view attributes
 	    def order = attrs.order
-	
+
 	    // Lookup domain by name if necessary
 	    if (!(type instanceof Class)) {
 	        try {
@@ -474,7 +462,7 @@ class ScaffoldTagLib {
 	            throwTagError("Tag [eachProperty] could not find class ${type}")
 	        }
 	    }
-	
+
 	    def application = grailsAttributes.getGrailsApplication()
 	    def metaClass = metaClassRegistry.getMetaClass(type)
 	    def props // = metaClass.properties.collect { k, v -> k }
@@ -527,7 +515,7 @@ class ScaffoldTagLib {
             if (bodyOut) out << bodyOut
 	    }
     }
-     
+
     /**
      *  renders a data type using customized views. Examples:
      *
@@ -550,16 +538,16 @@ class ScaffoldTagLib {
             if (!value) {
             	throwTagError("Tag [renderType] is missing required attribute [type] when [value] not specified")
             }
-            type = value.class
+            type = value
         }
         def constraints = attrs.constraints // sometimes useful
         def widget = attrs.widget // for custom views
         def widgets = attrs.widgets // for custom views of fields when an embedded object
         def style = attrs.style // for custom view attributes
-        if (type instanceof String) {
+        if (type instanceof CharSequence) {
             type = Class.forName(type)
         }
-        
+
         // Obtain info about the type
         Class clazz = type
         String prefix = ""
@@ -574,23 +562,23 @@ class ScaffoldTagLib {
         if (widget) {
             suffix = "_${widget}"
         }
-        
+
         // Locate the template
         def uri = findUriForType(template, prefix, clazz, suffix)
         if (!uri) {
              throwTagError("No template ${template} found for type ${type} in tag [renderType]")
          }
-//println "using ${uri} for ${name} ${type}"        
+//println "using ${uri} for ${name} ${type}"
         // Execute it
         def binding = [ name: name,
-                        type: type, 
-                        value: value, 
+                        type: type,
+                        value: value,
                         constraints: constraints,
                         widgets: widgets,
                         style: style ]
         executeTemplate(uri, binding)
     }
-     
+
     def renderActions = { attrs ->
 	    def template = attrs.template
 	    if (!template) {
@@ -617,7 +605,7 @@ class ScaffoldTagLib {
 	        }
 	    }
     }
-    
+
     def renderAction = { attrs, body ->
 	    def template = attrs.template
 	    if (!template) {
@@ -632,12 +620,12 @@ class ScaffoldTagLib {
 	    def item = attrs.item
 	    def widget = attrs.widget // for custom views
 	    def style = attrs.style // for custom view attributes
-	    
+
 	    String suffix = ""
 	    if (widget) {
 	        suffix = "_${widget}"
 	    }
-	    
+
 	    // Locate the template
 	    def uri = findView("${template}/action${suffix}.gsp")
 	    if (!uri) {
@@ -650,14 +638,14 @@ class ScaffoldTagLib {
 	    def binding = [ controller: controller,
 	                    action: action,
 	                    label: label,
-	                    item: item, 
+	                    item: item,
 	                    style: style,
 	                    body: body ]
 	    executeTemplate(uri, binding)
 	}
 
     /**
-     * Searches for a template through the class inheritance tree.  
+     * Searches for a template through the class inheritance tree.
      * Either a single prefix can be passed or multiple prefixes can be passed.
      * At the moment, only a single suffix can be passed.
      * The search path for each given class searched is:
@@ -685,10 +673,10 @@ class ScaffoldTagLib {
         }
         return uri
     }
-    
+
     private String findUriForExactClass( viewType,  prefix,  clazz,  suffix) {
         String uri
-        if (prefix instanceof String) {
+        if (prefix instanceof CharSequence) {
             uri = findView("${viewType}/${prefix}${clazz.name}${suffix}.gsp")
         } else {
             for (p in prefix) {
@@ -703,8 +691,8 @@ class ScaffoldTagLib {
 
 
     /**
-     * Returns the URI of the first template it can find 
-     * from either the standard views or plugin views.  
+     * Returns the URI of the first template it can find
+     * from either the standard views or plugin views.
      * Either a single view can be passed or multiple views can be passed
      *
      * The search path for a view is:
@@ -738,7 +726,7 @@ class ScaffoldTagLib {
 						"${PLUGIN_PATH_TO_VIEWS}/scaffolding"]
 
         for (p in viewpaths) {
-            if (view instanceof String  || view instanceof GString) {
+            if (view instanceof CharSequence) {
                 def uri = "${p}/${view}"
                 def resource = resourceLoader.getResource(uri)
                 if (resource && resource.file && resource.file.exists()) {
@@ -761,29 +749,12 @@ class ScaffoldTagLib {
         return null
     }
 
-    private GrailsClass getGrailsDomainClass(GrailsApplication application, String name) {
-        if (GrailsUtil.getGrailsVersion().startsWith("0.4")) {
-            return application.getGrailsDomainClass(name)
-        } else {
-            return application.getDomainClass(name)
-        }
-    }
-     
     /**
      * Convenience closure.
      * Executes a template located at a specific URI with the specified binding
      */
     private void executeTemplate(uri, binding) {
         def engine = grailsAttributes.getPagesTemplateEngine()
-        def t
-        if (GrailsUtil.getGrailsVersion().startsWith("0.4")) {
-            t = engine.createTemplate( uri,
-                    servletContext,
-                    request,
-                    response )
-        } else {
-            t = engine.createTemplate( uri )
-        }
-        t.make(binding).writeTo(out)
+        engine.createTemplate(uri).make(binding).writeTo(out)
     }
 }

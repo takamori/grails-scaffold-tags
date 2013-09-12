@@ -14,7 +14,7 @@
  */
 
 /**
- * A dynamic invocation tag lib that can be used to reduce API dependency 
+ * A dynamic invocation tag lib that can be used to reduce API dependency
  * introduced by use of GroovyPage.invokeTag() within GSP views.
  *
  * @author Daiji Takamori
@@ -38,40 +38,39 @@ class InvokeTagLib {
      * </p>
      */
     def invokeTag = { attrs, body ->
-    	def tagName = attrs.tag
+        def tagName = attrs.tag
         if (!tagName) {
             throwTagError("Tag [invokeTag] is missing required attribute [tag]")
         }
-    	def tagAttrs = attrs.attrs ? attrs.attrs : [:]
-    	attrs.each {k, v ->
-    		if (!["tag", "attrs"].contains(k)) {
-    		    tagAttrs[k] = v
-    		}
-    	}
-    	
-    	// Identify and execute the tag
+        def tagAttrs = attrs.attrs ?: [:]
+        attrs.each {k, v ->
+            if (!["tag", "attrs"].contains(k)) {
+                tagAttrs[k] = v
+            }
+        }
+
+        // Identify and execute the tag
         def tagLib = grailsAttributes.getTagLibraryForTag(request,response,tagName)
         if (!tagLib) {
             throwTagError("Tag [invokeTag] cannot find taglib for tag ${tagName}")
+        }
+
+        def tag = tagLib[tagName]
+        if (!(tag instanceof Closure)) {
+            throwTagError("Tag [invokeTag] cannot execute ${tagName}; not implemented as a closure")
+        }
+
+        tag = tag.clone()
+        if (tag.getParameterTypes().length == 1) {
+            // Execute the tag with attributes, and ignore the body
+            def tagOut = tag( tagAttrs )
+            if (tagOut && !(tagOut instanceof PrintWriter)) out << tagOut
+        } else if (tag.getParameterTypes().length == 2) {
+            // Execute the tag with attributes, passing the nested body
+            def tagOut = tag( tagAttrs, body )
+            if (tagOut && !(tagOut instanceof PrintWriter)) out << tagOut
         } else {
-            def tag = tagLib[tagName]
-            if (tag instanceof Closure) {
-                tag = tag.clone()
-                if (tag.getParameterTypes().length == 1) {
-                    // Execute the tag with attributes, and ignore the body
-                    def tagOut = tag( tagAttrs )
-		            if (tagOut && !(tagOut instanceof PrintWriter)) out << tagOut
-                } else if (tag.getParameterTypes().length == 2) {
-                    // Execute the tag with attributes, passing the nested body
-                    def tagOut = tag( tagAttrs, body )
-                    if (tagOut && !(tagOut instanceof PrintWriter)) out << tagOut
-                } else {
-                    throwTagError("Tag [invokeTag] cannot execute ${tagName}; not implemented as a 1 or 2 parameter closure")
-                }
-            } else {
-                throwTagError("Tag [invokeTag] cannot execute ${tagName}; not implemented as a closure")
-            }
+            throwTagError("Tag [invokeTag] cannot execute ${tagName}; not implemented as a 1 or 2 parameter closure")
         }
     }
-
 }

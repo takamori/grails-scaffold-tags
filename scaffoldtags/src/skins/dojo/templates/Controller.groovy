@@ -1,4 +1,4 @@
-<%=packageName ? "import ${packageName}.${className}" : ''%>            
+<%=packageName ? "import ${packageName}.${className}" : ''%>
 class ${className}Controller {
     def index = { redirect(action:list,params:params) }
 

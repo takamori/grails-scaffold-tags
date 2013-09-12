@@ -1,4 +1,4 @@
-<%=packageName%>  
+<%=packageName%>
 <html>
     <head>
          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -17,9 +17,9 @@
                     \${flash.message}
                 </div>
             </g:if>
-            <g:renderDomain domain="\${${className}.class}" 
-                            template="list" 
-                            value="\${${propertyName}List}" 
+            <g:renderDomain domain="\${${className}.class}"
+                            template="list"
+                            value="\${${propertyName}List}"
                             exceptWhen="\${ { prop -> prop.type == Set.class } }" />
             <div class="paginateButtons">
                 <g:paginate total="\${${className}.count()}" />

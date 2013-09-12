@@ -1,13 +1,13 @@
 <div class="listScrollWindow">
-<table id="${name}_list" class="list" dojoType="filteringTable" 
+<table id="${name}_list" class="list" dojoType="filteringTable"
        alternateRows="true" valueField="id"
        cellpadding="0" cellspacing="0" border="0">
     <thead>
         <tr>
             <th class="actionButtons"></th>
-            <g:eachDomainProperty domain="${domain}" name="${name}" 
-                                  except="${except}" exceptWhen="${exceptWhen}" 
-                                  only="${only}" 
+            <g:eachDomainProperty domain="${domain}" name="${name}"
+                                  except="${except}" exceptWhen="${exceptWhen}"
+                                  only="${only}"
                                   order="${order}">
                 <%
                 if (java.util.Calendar.class.isAssignableFrom(it.prop.type)) {
@@ -21,7 +21,7 @@
                     type = "String"
                 }
                 %>
-                <th field="${it.prop.name}" dataType="${type}" 
+                <th field="${it.prop.name}" dataType="${type}"
                     ${(it.prop.name == 'id') ? 'sort="asc"' : ''}>${it.prop.naturalName}</th>
             </g:eachDomainProperty>
         </tr>
@@ -36,26 +36,26 @@
                         <g:renderAction template="list" action="show" label="Show" item="${item}" />
                     </g:else>
                 </td>
-                <g:eachDomainProperty domain="${domain}" value="${item}" 
-                                      widgets="${widgets}" style="${style}" 
-                                      except="${except}" exceptWhen="${exceptWhen}" 
-                                      only="${only}" 
+                <g:eachDomainProperty domain="${domain}" value="${item}"
+                                      widgets="${widgets}" style="${style}"
+                                      except="${except}" exceptWhen="${exceptWhen}"
+                                      only="${only}"
                                       order="${order}">
                     <td><%
                         %><g:if test="${it.style?.link}"><g:def var="p" value="${it}"/><%
                             %><g:link action="${p.style.link.action}" id="${item.id}"><%
-                                %><g:renderProperty template="list.item" 
+                                %><g:renderProperty template="list.item"
                                                   domain="${domain}" domainId="${item?.id}"
-                                                  prop="${p.prop}" value="${p.value}" 
-                                                  name="${p.name}" 
+                                                  prop="${p.prop}" value="${p.value}"
+                                                  name="${p.name}"
                                                   widget="${p.widget}" style="${p.style}"/><%
                             %></g:link><%
                         %></g:if>
                         <g:else><%
-                            %><g:renderProperty template="list.item" 
+                            %><g:renderProperty template="list.item"
                                               domain="${domain}" domainId="${item?.id}"
-                                              prop="${it.prop}" value="${it.value}" 
-                                              name="${it.name}" 
+                                              prop="${it.prop}" value="${it.value}"
+                                              name="${it.name}"
                                               widget="${it.widget}" style="${it.style}"/><%
                         %></g:else><%
                     %></td>
@@ -86,7 +86,7 @@
         <div>&nbsp;| Display&nbsp;</div>
         <input type="text" dojoType="ValidationTextBox" id="${name}_pagePer" digit="true" value="${params.max}"/>
         <div>&nbsp;per page.</div>
-        <!-- 
+        <!--
         <textarea rows="5" cols="60" id="${name}_jsonDebug"></textarea>
          -->
         </form>

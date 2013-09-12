@@ -1,5 +1,5 @@
-<g:renderDomain template="editor" 
-                domain="${referencedDomain}" name="${name}" 
+<g:renderDomain template="editor"
+                domain="${referencedDomain}" name="${name}"
                 widgets="${widgets}" style="${style}"
-                value="${value}" 
+                value="${value}"
                 except="['id']"/>

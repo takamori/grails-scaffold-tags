@@ -8,9 +8,9 @@
         <script type="text/javascript">
             // Load Dojo's code relating to widget managing functions
             dojo.require("dojo.widget.*");
-            <g:renderDomain domain="\${${className}.class}" 
-                            template="list.script" 
-                            value="\${${propertyName}List}" 
+            <g:renderDomain domain="\${${className}.class}"
+                            template="list.script"
+                            value="\${${propertyName}List}"
                             exceptWhen="\${ { prop -> prop.type == Set.class } }"
                             style="[actions:[[show:'Show'], [edit: 'Edit']], pages: true ]" />
         </script>
@@ -27,9 +27,9 @@
                     \${flash.message}
                 </div>
             </g:if>
-            <g:renderDomain domain="\${${className}.class}" 
-                            template="list" 
-                            value="\${${propertyName}List}" 
+            <g:renderDomain domain="\${${className}.class}"
+                            template="list"
+                            value="\${${propertyName}List}"
                             exceptWhen="\${ { prop -> prop.type == Set.class } }"
                             style="[ actions:[[show:'Show'], [edit: 'Edit']],
                                     count: ${propertyName}Count, pages: true ]" />
