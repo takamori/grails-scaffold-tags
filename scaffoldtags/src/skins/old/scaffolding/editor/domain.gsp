@@ -1,10 +1,10 @@
 <div class="dialog">
 <table>
     <tbody>
-        <g:eachDomainProperty domain="${domain}" name="${name}" value="${value}" 
-                              widgets="${widgets}" style="${style}" 
-                              except="${except}" exceptWhen="${exceptWhen}" 
-                              only="${only}" 
+        <g:eachDomainProperty domain="${domain}" name="${name}" value="${value}"
+                              widgets="${widgets}" style="${style}"
+                              except="${except}" exceptWhen="${exceptWhen}"
+                              only="${only}"
                               order="${order}">
             <tr class='prop'>
             <td valign='top' class='name'><label for='${it.prop.name}'>${it.prop.naturalName}:</label></td>

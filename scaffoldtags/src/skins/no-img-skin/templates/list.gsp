@@ -17,9 +17,9 @@
                     \${flash.message}
                 </div>
             </g:if>
-            <g:renderDomain domain="\${${className}.class}" 
-                            template="list" 
-                            value="\${${propertyName}List}" 
+            <g:renderDomain domain="\${${className}.class}"
+                            template="list"
+                            value="\${${propertyName}List}"
                             exceptWhen="\${ { prop -> prop.type == Set.class } }"
                             style="[actions:[[show:'Show'], [edit: 'Edit']] ]" />
             <div class="paginateButtons">

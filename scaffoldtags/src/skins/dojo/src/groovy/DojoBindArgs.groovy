@@ -1,10 +1,10 @@
 class DojoBindArgs {
     Map args
-    def DojoBindArgs(Map map) {
+    DojoBindArgs(Map map) {
         args = map
     }
     String toString() {
-        StringBuffer bindArgs = new StringBuffer("{")
+        StringBuilder bindArgs = new StringBuilder("{")
         args.each { k, v ->
             if (bindArgs.length() > 1) {
                 bindArgs << ","

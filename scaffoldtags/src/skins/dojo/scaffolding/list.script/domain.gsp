@@ -5,16 +5,16 @@
 </g:else>
 function ${name}_renderProperty(domainType, property, domain)
 {
-<g:eachDomainProperty domain="${domain}" 
-                      widgets="${widgets}" style="${style}" 
-                      except="${except}" exceptWhen="${exceptWhen}" 
-                      only="${only}" 
+<g:eachDomainProperty domain="${domain}"
+                      widgets="${widgets}" style="${style}"
+                      except="${except}" exceptWhen="${exceptWhen}"
+                      only="${only}"
                       order="${order}">
     if (property == "${it.name}") {
-    <g:renderProperty template="list.item.script" 
+    <g:renderProperty template="list.item.script"
                       domain="${domain}" domainId="${item?.id}"
-                      prop="${it.prop}" value="${it.value}" 
-                      name="${it.name}" 
+                      prop="${it.prop}" value="${it.value}"
+                      name="${it.name}"
                       widget="${it.widget}" style="${it.style}"/>
     }
 </g:eachDomainProperty>
@@ -39,7 +39,7 @@ function ${name}_init()
     var widget = dojo.widget.createWidget("Button", params, document.getElementById("${name}_paginatorPrev"));
     params = {caption: "Next"};
     widget = dojo.widget.createWidget("Button", params, document.getElementById("${name}_paginatorNext"));
-    
+
     // Hide the normal paginate links and show the JS buttons
     var pageLinksDiv = document.getElementById("${name}_paginateButtons")
     pageLinksDiv.style.display = "none";
@@ -123,8 +123,8 @@ function ${name}_onRefresh(type, data, evt)
 </g:if>
 <%
     def itemStr = [id:"' + id + '"]
-    def actionLinks = renderActions([template:"list", 
-                                     actions: style.actions, 
+    def actionLinks = renderActions([template:"list",
+                                     actions: style.actions,
                                      item: itemStr])
 %>
 <g:if test="${style.pages}">

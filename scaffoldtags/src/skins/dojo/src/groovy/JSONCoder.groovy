@@ -1,23 +1,23 @@
 import java.text.DateFormat
 
 class JSONCoder {
-    static stringEncodable = [Character.class, String.class, URL.class]
-	static stringFormatters = [(Date.class):DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)]
+    static stringEncodable = [Character, String, URL]
+	static stringFormatters = [(Date):DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)]
     static hiddenFields = ["version"]
-    
+
     def object
-    
-    def JSONCoder(obj) {
+
+    JSONCoder(obj) {
         object = obj
     }
-      
-    public String toString() {
-        StringBuffer sb = new StringBuffer()
+
+    String toString() {
+        StringBuilder sb = new StringBuilder()
         encodeJSON(sb, object, "")
         return sb.toString()
     }
-    
-    void encodeArray(StringBuffer sb, array, path) {
+
+    void encodeArray(StringBuilder sb, array, path) {
 //System.err.println("encodeArray('${sb}', ${array})")
         sb.append("[")
         boolean first = true
@@ -31,8 +31,8 @@ class JSONCoder {
         }
         sb.append("]")
     }
-    
-    void encodeMap(StringBuffer sb, map, path) {
+
+    void encodeMap(StringBuilder sb, map, path) {
 //System.err.println("encodeMap('${sb}', ${map})")
         sb.append("{")
         boolean first = true
@@ -48,17 +48,17 @@ class JSONCoder {
         }
         sb.append("}")
     }
-    
-    void encodeObject(StringBuffer sb, o, path) {
+
+    void encodeObject(StringBuilder sb, o, path) {
 //System.err.println("encodeObject('${sb}', ${o})")
-		def props = o.properties.findAll { k, v -> 
+		def props = o.properties.findAll { k, v ->
 //			!k.equals("class") && !k.equals("metaClass") && !k.equals("constraints") && !k.equals("hasMany") && !k.equals("belongsTo")
 			!k.equals("metaClass") && !k.equals("constraints") && !k.equals("hasMany") && !k.equals("belongsTo")
     	}
         encodeMap(sb, props, path)
     }
-    
-    void encodeToString(StringBuffer sb, o) {
+
+    void encodeToString(StringBuilder sb, o) {
 //System.err.println("encodeToString('${sb}', ${o})")
         sb.append('"')
         def s = o.toString().replaceAll('\n','\\n')
@@ -81,8 +81,8 @@ class JSONCoder {
 //        sb.append(o.toString().replaceAll("\\", "\\\\").replaceAll("\"", "\\\""))
         sb.append('"')
     }
-    
-    void encodeJSON(StringBuffer sb, o, path) {
+
+    void encodeJSON(StringBuilder sb, o, path) {
 //System.err.println("encodeJSON('${sb}', ${o})")
         if (o == null) {
             sb.append("null")

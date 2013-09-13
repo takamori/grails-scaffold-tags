@@ -1,12 +1,12 @@
 /*
  * Copyright 2007-2009 Daiji Takamori
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,18 +16,17 @@
 
 /**
  * Gant script that installs a ScaffoldTags skin
- * 
+ *
  * @author Daiji Takamori
  *
  * @since 0.6
  */
 
-grailsHome = Ant.antProject.properties."environment.GRAILS_HOME"
 includeTargets << grailsScript("_GrailsInit")
 
-target ('default': "Installs a ScaffoldTags skin") {
+target (installSkin: "Installs a ScaffoldTags skin") {
 	depends(checkVersion, parseArguments)
-	
+
     pluginSkins = "${scaffoldTagsPluginDir}/src/skins"
     appSkins = "${basedir}/src/skins"
 
@@ -41,7 +40,7 @@ target ('default': "Installs a ScaffoldTags skin") {
 	 	    availableSkins.addAll(new File(appSkins).list().toList())
  	    }
  	    if (!skin) {
- 	        println "Available skins under grails-app/skins directories:"
+ 	        println "Available skins under grails-app/skins directories:
  	        availableSkins.each {
  	            println "\t${it}"
  	        }
@@ -57,7 +56,7 @@ target ('default': "Installs a ScaffoldTags skin") {
     if (!new File(skinDir).exists()) {
         skinDir = "${pluginSkins}/${skin}"
     }
-    
+
     // establish initial vars
  	sources = [ scaffolding: "${skinDir}/scaffolding",
  	            templates: "${skinDir}/templates",
@@ -72,7 +71,7 @@ target ('default': "Installs a ScaffoldTags skin") {
  	clearTargets = [ 'scaffolding' ]
  	sourceFiles = [ index: "${skinDir}/index.gsp" ]
 	targetFiles = [ index: "${basedir}/web-app/index.gsp" ]
-	
+
     // prompt the user if any overwrites will occur before starting copy
     println "Checking for pre-existing files..."
 	sources.each { sourceType, sourcePath ->
@@ -80,12 +79,12 @@ target ('default': "Installs a ScaffoldTags skin") {
 	    if (sourceDir.exists()) {
 	    	targetPath = myTargets[sourceType]
 	        targetDir = new File(targetPath)
-	    	
+
 	    	if (clearTargets.contains(sourceType)) {
 	    	    // Prompt the user if the existing dir will be blown away.
 	    	    if (targetDir.exists()) {
 	    	        println "Warning: Directory ${targetPath} already exists and would be completely erased."
-		    		Ant.input(addProperty: "skin.dir.${sourceType}.delete", 
+		    		ant.input(addProperty: "skin.dir.${sourceType}.delete",
 		    		        message: "Delete existing ${sourceType}? ",
     		                validArgs: "y,n")
 	    	    }
@@ -113,12 +112,12 @@ target ('default': "Installs a ScaffoldTags skin") {
 	                	hasDir |= isDir
 	                }
 	                if (hasOlder || hasDir) {
-			    		Ant.input(addProperty: "skin.dir.${sourceType}.copy", 
+			    		ant.input(addProperty: "skin.dir.${sourceType}.copy",
 			    		        message: "Copy on top of existing ${sourceType}? ",
 	    		                validArgs: "y,n")
 	                }
-	                if (Ant.antProject.properties."skin.dir.${sourceType}.copy" != "n" && hasNewer) {
-			    		Ant.input(addProperty: "skin.dir.${sourceType}.overwrite", 
+	                if (ant.antProject.properties."skin.dir.${sourceType}.copy" != "n" && hasNewer) {
+			    		ant.input(addProperty: "skin.dir.${sourceType}.overwrite",
 			    		        message: "Overwrite files in existing ${sourceType} even if newer? ",
 	    		                validArgs: "y,n")
 	                }
@@ -131,18 +130,18 @@ target ('default': "Installs a ScaffoldTags skin") {
 	    if (sourceFile.exists()) {
 	    	targetPath = targetFiles[sourceType]
 	        targetFile = new File(targetPath)
-	    	
+
 	    	// Prompt the user if an overwrite will occur
 	        if (targetFile.exists()) {
                 print "Warning: File ${targetPath} exists already"
                 if (targetFile.lastModified() <= sourceFile.lastModified()) {
                     println " and would be overwritten."
-		    		Ant.input(addProperty: "skin.file.${sourceType}.copy", 
+		    		ant.input(addProperty: "skin.file.${sourceType}.copy",
 		    		        message: "Overwrite existing ${sourceType}? ",
 			                validArgs: "y,n")
                 } else {
                     println " and is newer than source file."
-		    		Ant.input(addProperty: "skin.file.${sourceType}.overwrite", 
+		    		ant.input(addProperty: "skin.file.${sourceType}.overwrite",
 	    		        message: "Overwrite existing ${sourceType} even if newer? ",
 		                validArgs: "y,n")
                 }
@@ -154,14 +153,14 @@ target ('default': "Installs a ScaffoldTags skin") {
     sources.each { sourceType, sourcePath ->
 		sourceDir = new File(sourcePath)
 	    if (sourceDir.exists() &&
-	        (Ant.antProject.properties."skin.dir.${sourceType}.copy" != "n")) {
+	        (ant.antProject.properties."skin.dir.${sourceType}.copy" != "n")) {
 	        doCopy = true
 	    }
     }
 	sourceFiles.each { sourceType, sourcePath ->
 		sourceFile = new File(sourcePath)
 	    if (sourceFile.exists() &&
-	        (Ant.antProject.properties."skin.file.${sourceType}.copy" != "n")) {
+	        (ant.antProject.properties."skin.file.${sourceType}.copy" != "n")) {
 	        doCopy = true
 	    }
     }
@@ -169,26 +168,26 @@ target ('default': "Installs a ScaffoldTags skin") {
 	    sources.each { sourceType, sourcePath ->
 			sourceDir = new File(sourcePath)
 		    if (sourceDir.exists() &&
-	            (Ant.antProject.properties."skin.dir.${sourceType}.copy" != "n")) {
+	            (ant.antProject.properties."skin.dir.${sourceType}.copy" != "n")) {
 		    	targetPath = myTargets[sourceType]
- 		        if (Ant.antProject.properties."skin.dir.${sourceType}.delete" == "y") {
+ 		        if (ant.antProject.properties."skin.dir.${sourceType}.delete" == "y") {
 		            println "Removing existing ${sourceType}..."
-		            Ant.delete(dir: targetPath)
+		            ant.delete(dir: targetPath)
 		        }
-				def overwrite = (Ant.antProject.properties."skin.dir.${sourceType}.overwrite" != "n")
+				def overwrite = (ant.antProject.properties."skin.dir.${sourceType}.overwrite" != "n")
 	    		if (overwrite) {
 	    		    println "Installing skin '${skin}' ${sourceType} into ${targetPath}..."
 	    		} else {
 					println "Installing only newer files in skin '${skin}' ${sourceType}into ${targetPath}..."
 	    		}
-		    	
+
 		    	// Create any directories that don't exist
 		        if (!new File(targetPath).exists()) {
-		    		Ant.mkdir(dir: targetPath)
+		    		ant.mkdir(dir: targetPath)
 		        }
-		    	
+
 	    		// copy files
-		    	Ant.copy(todir: targetPath, overwrite: overwrite, preservelastmodified: true) {
+		    	ant.copy(todir: targetPath, overwrite: overwrite, preservelastmodified: true) {
 		    		fileset(dir: sourcePath, includes: "**")
 		    	}
 		    }
@@ -196,19 +195,19 @@ target ('default': "Installs a ScaffoldTags skin") {
 		sourceFiles.each { sourceType, sourcePath ->
 			sourceFile = new File(sourcePath)
 		    if (sourceFile.exists() &&
-	            (Ant.antProject.properties."skin.file.${sourceType}.copy" != "n")) {
+	            (ant.antProject.properties."skin.file.${sourceType}.copy" != "n")) {
 		    	overwrite = false
 		    	targetPath = targetFiles[sourceType]
-		 		if (Ant.antProject.properties."skin.file.${sourceType}.overwrite" != "n")
+		 		if (ant.antProject.properties."skin.file.${sourceType}.overwrite" != "n")
 					overwrite = true
 	    		if (overwrite) {
 	    		    println "Installing skin '${skin}' ${sourceType}..."
 	    		} else {
 					println "Installing skin '${skin}' ${sourceType} only if newer..."
 	    		}
-		    	
+
 				// copy file
-		    	Ant.copy(file: sourcePath, tofile: targetPath, overwrite: overwrite, preservelastmodified: true)
+		    	ant.copy(file: sourcePath, tofile: targetPath, overwrite: overwrite, preservelastmodified: true)
 		    }
 		}
 		println "ScaffoldTags skin ${skin} installed successfully"
@@ -216,3 +215,5 @@ target ('default': "Installs a ScaffoldTags skin") {
 	    println "No files installed"
 	}
 }
+
+setDefaultTarget 'installSkin'

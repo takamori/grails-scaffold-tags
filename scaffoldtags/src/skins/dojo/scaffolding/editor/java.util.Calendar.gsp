@@ -20,7 +20,7 @@
     if (!style.containerToggleDuration) {
         style.containerToggleDuration = "200"
     }
-    def c = new GregorianCalendar();
+    def c = new GregorianCalendar()
     if (value != null) {
         c.setTime(value.time)
     }
@@ -32,7 +32,7 @@
     <input type="hidden" name="${name}_day" id="${name}_day" value="${day}" />
     <input type="hidden" name="${name}_month" id="${name}_month" value="${month}" />
     <input type="hidden" name="${name}_year" id="${name}_year" value="${year}" />
-    <input id="${name}_date" name="${name}_date" dojoType="dropdowndatepicker" 
-        value="${new java.text.SimpleDateFormat("yyyy-MM-dd").format(c.time)}" 
+    <input id="${name}_date" name="${name}_date" dojoType="dropdowndatepicker"
+        value="${new java.text.SimpleDateFormat("yyyy-MM-dd").format(c.time)}"
         containerToggle="${style.containerToggle}" containerToggleDuration="${style.containerToggleDuration}" ${style} />
 </g:else>

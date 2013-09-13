@@ -1,7 +1,7 @@
 <%
 attrs = [:]
 if (constraints?.maxSize) attrs.maxlength=constraints.maxSize
-attrStr = new StringBuffer()
+attrStr = new StringBuilder()
 attrs.each { k, v ->
     attrStr << "${k}='${v}' "
 }

@@ -5,8 +5,8 @@
             <tr class="prop">
                 <td>${entry.key}</td>
                 <td>
-                    <g:renderType template="show" 
-                                  name="${name + '.' + entry.key}" value="${entry.value}" 
+                    <g:renderType template="show"
+                                  name="${name + '.' + entry.key}" value="${entry.value}"
                                   widget="${widgets[entry.key]}" style="${style[entry.key]}" />
                 </td>
             </tr>

@@ -9,7 +9,7 @@
 	<body>
         <div id="spinner" class="spinner" style="display:none;">
             <img src="${createLinkTo(dir:'images',file:'spinner.gif')}" alt="Spinner" />
-        </div>  
+        </div>
         <div class="page">
             <div class="pageinner">
                 <div class="header">
@@ -24,12 +24,12 @@
                 </div>
         		<g:layoutBody />
                 <div class="signature">
-                    Powered by 
+                    Powered by
                     <a href="http://grails.org"><img class="signatureButton" src="${createLinkTo(dir:'images',file:'grails_logo.jpg')}" alt="Grails" /></a>
                     and
                     <a href="http://dojotoolkit.org"><img class="signatureButton" src="${createLinkTo(dir:'images',file:'dojo_logo.jpg')}" alt="Dojo" /></a>
-                </div> 
+                </div>
             </div>
         </div>
-	</body>	
+	</body>
 </html>
