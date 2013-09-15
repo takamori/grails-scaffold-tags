@@ -40,7 +40,7 @@ class ScaffoldTagLib {
                                               (Float.TYPE): Float,
                                               (Double.TYPE): Double ]
 
-	/** Reference to the MetaClassRegistry */
+    /** Reference to the MetaClassRegistry */
     private static final MetaClassRegistry metaClassRegistry = GroovySystem.getMetaClassRegistry()
 
     /**
@@ -101,9 +101,9 @@ class ScaffoldTagLib {
         props = props.sort { o1, o2 ->
             String name1 = o1.name
             String name2 = o2.name
-            if (name1 == "id") {
+            if (name1 == "id" && style && !(style[name1]?.first == false)) {
                 return -1
-            } else if (name2 == "id") {
+            } else if (name2 == "id" && style && !(style[name2]?.first == false)) {
                 return 1
             } else {
                 if (order) {
@@ -192,6 +192,7 @@ class ScaffoldTagLib {
         }
 
         def binding = [ domain: domain,
+                        uiDomainName: attrs.uiDomainName,
                         name: name,
                         value: value,
                         widgets: widgets,
@@ -391,9 +392,9 @@ class ScaffoldTagLib {
         // Locate the template
         def domainName = domainClass?.propertyName
         def uri = findUriForType(template,
-                				["${relationType}_", "${simpleRelationType}_"],
-                				clazz,
-                				suffix)
+                                ["${relationType}_", "${simpleRelationType}_"],
+                                clazz,
+                                suffix)
         if (!uri) {
             uri = findView(["${template}/${relationType}${suffix}.gsp",
                             "${template}/${simpleRelationType}${suffix}.gsp"])
@@ -441,79 +442,79 @@ class ScaffoldTagLib {
      * This is intended to be used by type renderers that represent a bean.
      */
     def eachProperty = { attrs, body ->
-	    def type = attrs.type
-	    if (!type) {
-	        throwTagError("Tag [eachProperty] is missing required attribute [type]")
-	    }
-	    def name = attrs.name // for inputs
-	    def except = attrs.except // to skip certain properties
-	    def exceptWhen = attrs.exceptWhen // to skip properties with certain conditions
-	    def only = attrs.only // to only display specific properties
-	    def value = attrs.value // for edit/show; not always create
-	    def widgets = attrs.widgets // custom views
-	    def style = attrs.style // custom view attributes
-	    def order = attrs.order
+        def type = attrs.type
+        if (!type) {
+            throwTagError("Tag [eachProperty] is missing required attribute [type]")
+        }
+        def name = attrs.name // for inputs
+        def except = attrs.except // to skip certain properties
+        def exceptWhen = attrs.exceptWhen // to skip properties with certain conditions
+        def only = attrs.only // to only display specific properties
+        def value = attrs.value // for edit/show; not always create
+        def widgets = attrs.widgets // custom views
+        def style = attrs.style // custom view attributes
+        def order = attrs.order
 
-	    // Lookup domain by name if necessary
-	    if (!(type instanceof Class)) {
-	        try {
-	            type = Class.forName(type)
-	        } catch (ClassNotFoundException e) {
-	            throwTagError("Tag [eachProperty] could not find class ${type}")
-	        }
-	    }
+        // Lookup domain by name if necessary
+        if (!(type instanceof Class)) {
+            try {
+                type = Class.forName(type)
+            } catch (ClassNotFoundException e) {
+                throwTagError("Tag [eachProperty] could not find class ${type}")
+            }
+        }
 
-	    def application = grailsAttributes.getGrailsApplication()
-	    def metaClass = metaClassRegistry.getMetaClass(type)
-	    def props // = metaClass.properties.collect { k, v -> k }
-	    if (only) {
-	        props = metaClass.properties.findAll { prop -> only.contains( prop.name) }
-	        if (!order) {
-	            order = only
-	        }
-	    } else {
-	        props = metaClass.properties.findAll { prop ->
-	            String propName = prop.name
-	            return ((!except || !except.contains(propName)) &&
-	                    (!exceptWhen || !exceptWhen(prop)))
-	        }
-	    }
-	    props = props.sort { o1, o2 ->
-	        String name1 = o1.name
-	        String name2 = o2.name
-	        if (name1 == "id") {
-	            return -1
-	        } else if (name2 == "id") {
-	            return 1
-	        } else {
-	            if (order) {
-	                int i1 = order.indexOf(name1)
-	                int i2 = order.indexOf(name2)
-	                if (i1 != -1 && i2 != -1) {
-	                    if (i1 < i2) {
-	                        return -1
-	                    } else if (i1 > i2) {
-	                        return 1
-	                    }
-	                } else if (i1 != -1) {
-	                    return -1
-	                } else if (i2 != -1) {
-	                    return 1
-	                }
-	            }
-	            return name1.compareTo(name2)
-	        }
-	    }
-	    props.each { prop ->
-	        def item = [:]
-	        item.prop = prop
-	        item.name = name ? "${name}.${prop.name}" : prop.name
-	        item.value = value ? value[prop.name] : null
-	        item.style = style ? style[prop.name] : null
+        def application = grailsAttributes.getGrailsApplication()
+        def metaClass = metaClassRegistry.getMetaClass(type)
+        def props // = metaClass.properties.collect { k, v -> k }
+        if (only) {
+            props = metaClass.properties.findAll { prop -> only.contains( prop.name) }
+            if (!order) {
+                order = only
+            }
+        } else {
+            props = metaClass.properties.findAll { prop ->
+                String propName = prop.name
+                return ((!except || !except.contains(propName)) &&
+                        (!exceptWhen || !exceptWhen(prop)))
+            }
+        }
+        props = props.sort { o1, o2 ->
+            String name1 = o1.name
+            String name2 = o2.name
+            if (name1 == "id") {
+                return -1
+            } else if (name2 == "id") {
+                return 1
+            } else {
+                if (order) {
+                    int i1 = order.indexOf(name1)
+                    int i2 = order.indexOf(name2)
+                    if (i1 != -1 && i2 != -1) {
+                        if (i1 < i2) {
+                            return -1
+                        } else if (i1 > i2) {
+                            return 1
+                        }
+                    } else if (i1 != -1) {
+                        return -1
+                    } else if (i2 != -1) {
+                        return 1
+                    }
+                }
+                return name1.compareTo(name2)
+            }
+        }
+        props.each { prop ->
+            def item = [:]
+            item.prop = prop
+            item.name = name ? "${name}.${prop.name}" : prop.name
+            item.value = value ? value[prop.name] : null
+            item.style = style ? style[prop.name] : null
             item.widget = widgets ? widgets[prop.name] : null
-	        def bodyOut = body(item)
+            def bodyOut = body(item)
             if (bodyOut) out << bodyOut
-	    }
+        }
     }
 
     /**
@@ -536,7 +537,7 @@ class ScaffoldTagLib {
         def value = attrs.value // for edit/show; not always create
         if (!type) {
             if (!value) {
-            	throwTagError("Tag [renderType] is missing required attribute [type] when [value] not specified")
+                throwTagError("Tag [renderType] is missing required attribute [type] when [value] not specified")
             }
             type = value
         }
@@ -568,7 +569,7 @@ class ScaffoldTagLib {
         if (!uri) {
              throwTagError("No template ${template} found for type ${type} in tag [renderType]")
          }
-//println "using ${uri} for ${name} ${type}"
+        LOG.debug "using ${uri} for ${name} ${type}"
         // Execute it
         def binding = [ name: name,
                         type: type,
@@ -580,69 +581,69 @@ class ScaffoldTagLib {
     }
 
     def renderActions = { attrs ->
-	    def template = attrs.template
-	    if (!template) {
-	        throwTagError("Tag [renderActions] is missing required attribute [template]")
-	    }
-	    def actions = attrs.actions
-	    if (!actions) {
-	        throwTagError("Tag [renderActions] is missing required attribute [actions]")
-	    }
-	    def controller = attrs.controller
-	    def item = attrs.item
-	    def widget = attrs.widget // for custom views
-	    def style = attrs.style // for custom view attributes
-	    actions.each { actionMapping ->
-	        actionMapping.each { k, v ->
-	        	def tagOut = renderAction([template: template,
-	        	              action: k,
-	        	              label: v,
-	        	              controller: controller,
-	        	              item: item,
-	        	              widget: widget,
-	        	              style: style], {} )
-	            if (tagOut) out << tagOut
-	        }
-	    }
+        def template = attrs.template
+        if (!template) {
+            throwTagError("Tag [renderActions] is missing required attribute [template]")
+        }
+        def actions = attrs.actions
+        if (!actions) {
+            throwTagError("Tag [renderActions] is missing required attribute [actions]")
+        }
+        def controller = attrs.controller
+        def item = attrs.item
+        def widget = attrs.widget // for custom views
+        def style = attrs.style // for custom view attributes
+        actions.each { actionMapping ->
+            actionMapping.each { k, v ->
+                def tagOut = renderAction([template: template,
+                              action: k,
+                              label: v,
+                              controller: controller,
+                              item: item,
+                              widget: widget,
+                              style: style], {} )
+                if (tagOut) out << tagOut
+            }
+        }
     }
 
     def renderAction = { attrs, body ->
-	    def template = attrs.template
-	    if (!template) {
-	        throwTagError("Tag [renderAction] is missing required attribute [template]")
-	    }
-	    def action = attrs.action
-	    if (!action) {
-	        throwTagError("Tag [renderAction] is missing required attribute [action]")
-	    }
-	    def label = attrs.label
-	    def controller = attrs.controller
-	    def item = attrs.item
-	    def widget = attrs.widget // for custom views
-	    def style = attrs.style // for custom view attributes
+        def template = attrs.template
+        if (!template) {
+            throwTagError("Tag [renderAction] is missing required attribute [template]")
+        }
+        def action = attrs.action
+        if (!action) {
+            throwTagError("Tag [renderAction] is missing required attribute [action]")
+        }
+        def label = attrs.label
+        def controller = attrs.controller
+        def item = attrs.item
+        def widget = attrs.widget // for custom views
+        def style = attrs.style // for custom view attributes
 
-	    String suffix = ""
-	    if (widget) {
-	        suffix = "_${widget}"
-	    }
+        String suffix = ""
+        if (widget) {
+            suffix = "_${widget}"
+        }
 
-	    // Locate the template
-	    def uri = findView("${template}/action${suffix}.gsp")
-	    if (!uri) {
-		    uri = findView("action${suffix}.gsp")
-	    }
-	    if (!uri) {
-	         throwTagError("No action renderer found for template ${template} in tag [renderAction]")
-	    }
-	    // Execute it
-	    def binding = [ controller: controller,
-	                    action: action,
-	                    label: label,
-	                    item: item,
-	                    style: style,
-	                    body: body ]
-	    executeTemplate(uri, binding)
-	}
+        // Locate the template
+        def uri = findView("${template}/action${suffix}.gsp")
+        if (!uri) {
+            uri = findView("action${suffix}.gsp")
+        }
+        if (!uri) {
+             throwTagError("No action renderer found for template ${template} in tag [renderAction]")
+        }
+        // Execute it
+        def binding = [ controller: controller,
+                        action: action,
+                        label: label,
+                        item: item,
+                        style: style,
+                        body: body ]
+        executeTemplate(uri, binding)
+    }
 
     /**
      * Searches for a template through the class inheritance tree.
@@ -659,7 +660,7 @@ class ScaffoldTagLib {
         while (!uri && clazz) {
             uri = findUriForExactClass(viewType, prefix, clazz, suffix)
             if (!uri) {
-//				println("Seeing interfaces ${clazz.interfaces?.name} for class ${clazz.name}")
+                LOG.debug "Seeing interfaces ${clazz.interfaces?.name} for class ${clazz.name}"
                 for (i in clazz.interfaces) {
                     uri = findUriForExactClass(viewType, prefix, i, suffix)
                     if (uri) {
@@ -701,51 +702,51 @@ class ScaffoldTagLib {
      *        {pluginPath}/scaffolding/{view}
      */
    private findView(view) {
-	   // There needs to be a better way to do the path lookup
-	   String controllerUri = grailsAttributes.getControllerUri(request)
+       // There needs to be a better way to do the path lookup
+       String controllerUri = grailsAttributes.getControllerUri(request)
 
-	   def ctx = grailsAttributes.applicationContext
-	   def resourceLoader = ctx.containsBean('groovyPageResourceLoader') ? ctx.groovyPageResourceLoader : ctx
+       def ctx = grailsAttributes.applicationContext
+       def resourceLoader = ctx.containsBean('groovyPageResourceLoader') ? ctx.groovyPageResourceLoader : ctx
 
-	   if (!initPaths) {
-	       if (!resourceLoader.getResource("${PATH_TO_VIEWS}/error.gsp").exists())
-		   {
-			   PATH_TO_VIEWS = PATH_TO_VIEWS.substring(
-				   PATH_TO_VIEWS.indexOf('/', 1) + 1)
-			   PLUGIN_PATH_TO_VIEWS = PLUGIN_PATH_TO_VIEWS.substring(
-				   PLUGIN_PATH_TO_VIEWS.indexOf('/', 1) + 1)
-			   if (!resourceLoader.getResource("${PLUGIN_PATH_TO_VIEWS}/scaffolding/editor/domain.gsp").exists()) {
-				   PLUGIN_PATH_TO_VIEWS = org.codehaus.groovy.grails.plugins.GrailsPluginUtils.pluginInfos.find { it.name == "scaffold-tags" }?.pluginDir.toString() + "/grails-app/views"
-				   PLUGIN_PATH_TO_VIEWS = "file:" + PLUGIN_PATH_TO_VIEWS.replace("/./", "/")
-			   }
-		   }
+       if (!initPaths) {
+           if (!resourceLoader.getResource("${PATH_TO_VIEWS}/error.gsp").exists())
+           {
+               PATH_TO_VIEWS = PATH_TO_VIEWS.substring(
+                   PATH_TO_VIEWS.indexOf('/', 1) + 1)
+               PLUGIN_PATH_TO_VIEWS = PLUGIN_PATH_TO_VIEWS.substring(
+                   PLUGIN_PATH_TO_VIEWS.indexOf('/', 1) + 1)
+               if (!resourceLoader.getResource("${PLUGIN_PATH_TO_VIEWS}/scaffolding/editor/domain.gsp").exists()) {
+                   PLUGIN_PATH_TO_VIEWS = org.codehaus.groovy.grails.plugins.GrailsPluginUtils.pluginInfos.find { it.name == "scaffold-tags" }?.pluginDir.toString() + "/grails-app/views"
+                   PLUGIN_PATH_TO_VIEWS = "file:" + PLUGIN_PATH_TO_VIEWS.replace("/./", "/")
+               }
+           }
            initPaths = true
-	   }
-	   def viewpaths = ["${PATH_TO_VIEWS}${controllerUri}",
-						"${PATH_TO_VIEWS}/scaffolding",
-						"${PLUGIN_PATH_TO_VIEWS}/scaffolding"]
+       }
+       def viewpaths = ["${PATH_TO_VIEWS}${controllerUri}",
+                        "${PATH_TO_VIEWS}/scaffolding",
+                        "${PLUGIN_PATH_TO_VIEWS}/scaffolding"]
 
         for (p in viewpaths) {
             if (view instanceof CharSequence) {
                 def uri = "${p}/${view}"
                 def resource = resourceLoader.getResource(uri)
                 if (resource && resource.file && resource.file.exists()) {
-                    // println "found-1 in ${uri} at ${resource}"
+                    LOG.debug "found-1 in ${uri} at ${resource}"
                     return uri
                 }
             } else {
                 for (v in view) {
                     def uri = "${p}/${v}"
-					// println "searching for ${uri}"
+                    LOG.debug "searching for ${uri}"
                     def resource = resourceLoader.getResource(uri)
                     if (resource && resource.file && resource.file.exists()) {
-                        // println "found-2 in ${uri} at ${resource}"
+                        LOG.debug "found-2 in ${uri} at ${resource}"
                         return uri
                     }
                 }
             }
         }
-		// println "none found"
+        LOG.debug "none found"
         return null
     }
 
