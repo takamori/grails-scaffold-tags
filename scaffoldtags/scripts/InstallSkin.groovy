@@ -33,7 +33,7 @@ target (installSkin: "Installs a ScaffoldTags skin") {
     // Obtain the skin name; make sure it exists
  	skin = argsMap.params[0]
  	first = true
- 	while (first || !skin) {
+
  	    first = false
  	    availableSkins = new File(pluginSkins).list().toList()
  	    if (new File(appSkins).exists()) {
@@ -44,14 +44,14 @@ target (installSkin: "Installs a ScaffoldTags skin") {
  	        availableSkins.each {
  	            println "\t${it}"
  	        }
- 	    	println "Skin name not specified. Please enter:"
- 	    	skin = System.in.readLine()
+                ant.input addProperty: "skin", message: "Skin name not specified. Please enter:"
+                skin = ant.antProject.properties.skin
  	    }
  	 	if (!availableSkins.contains(skin)) {
  		    println "Skin \"${skin}\" not available"
  		    skin = null
  		}
- 	}
+
     skinDir = "${appSkins}/${skin}"
     if (!new File(skinDir).exists()) {
         skinDir = "${pluginSkins}/${skin}"
