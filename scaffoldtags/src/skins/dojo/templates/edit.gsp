@@ -1,3 +1,4 @@
+<%=packageName%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -7,9 +8,9 @@
         <script type="text/javascript">
             // Load Dojo's code relating to widget managing functions
             dojo.require("dojo.widget.*");
-            <g:renderDomain domain="\${${className}.class}" 
-                            template="editor.script" 
-                            value="\${${propertyName}}" 
+            <g:renderDomain domain="\${${className}.class}"
+                            template="editor.script"
+                            value="\${${propertyName}}"
                             style="[id: [readonly: true], actions:[[update: 'Update'], [delete: 'Delete']] ]" />
         </script>
     </head>
@@ -30,9 +31,9 @@
                 </div>
             </g:hasErrors>
             <g:form method="post" <%= multiPart ? ' enctype="multipart/form-data"' : '' %>>
-                <g:renderDomain domain="\${${className}.class}" 
-                                template="editor" 
-                                value="\${${propertyName}}" 
+                <g:renderDomain domain="\${${className}.class}"
+                                template="editor"
+                                value="\${${propertyName}}"
                                 style="[id: [readonly: true], actions:[[update: 'Update'], [delete: 'Delete']] ]" />
             </g:form>
         </div>

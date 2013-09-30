@@ -1,4 +1,4 @@
-<%=packageName%>  
+<%=packageName%>
 <html>
     <head>
          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -27,9 +27,9 @@
            </div>
            <g:form method="post" <%= multiPart ? ' enctype="multipart/form-data"' : '' %>>
                <input type="hidden" name="id" value="\${${propertyName}?.id}" />
-               <g:renderDomain domain="\${${className}.class}" 
-                               template="editor" 
-                               value="\${${propertyName}}" 
+               <g:renderDomain domain="\${${className}.class}"
+                               template="editor"
+                               value="\${${propertyName}}"
                                except="['id']" />
                <div class="buttons">
                      <span class="button"><g:actionSubmit value="Update" /></span>

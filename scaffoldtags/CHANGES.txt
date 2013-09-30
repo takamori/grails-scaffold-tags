@@ -1,4 +1,9 @@
-VERSION: 0.7.3
+VERSION: 0.7.4
+
+Changes since 0.7.3:
+- Fixed the install-skin to be compatible with higer grails versions script.
+- load scaffold files not only for the war compiled environment.
+- fix template CRUD files to support domain classes in packages.
 
 Changes since 0.7.2:
 - Fixed the install-skin script.  Thanks to J. Barmash for notifying me.

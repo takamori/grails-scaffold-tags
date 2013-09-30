@@ -20,7 +20,7 @@
     if (!style.containerToggleDuration) {
         style.containerToggleDuration = "200"
     }
-    def c = new GregorianCalendar();
+    def c = new GregorianCalendar()
     if (value != null) {
         c.setTime(value)
     }
@@ -36,17 +36,17 @@
     <input type="hidden" name="${name}_year" id="${name}_year" value="${year}" />
     <input type="hidden" name="${name}_hour" id="${name}_hour" value="${hour}" />
     <input type="hidden" name="${name}_minute" id="${name}_minute" value="${minute}" />
-    <input id="${name}_date" name="${name}_date" dojoType="dropdowndatepicker" 
-        value="${new java.text.SimpleDateFormat("yyyy-MM-dd").format(c.time)}" 
+    <input id="${name}_date" name="${name}_date" dojoType="dropdowndatepicker"
+        value="${new java.text.SimpleDateFormat("yyyy-MM-dd").format(c.time)}"
         containerToggle="${style.containerToggle}" containerToggleDuration="${style.containerToggleDuration}" ${style} />
-    <input id="${name}_time" name="${name}_time" dojoType="dropdowntimepicker" 
-        value="${new java.text.SimpleDateFormat("HH:mm").format(c.time)}" 
+    <input id="${name}_time" name="${name}_time" dojoType="dropdowntimepicker"
+        value="${new java.text.SimpleDateFormat("HH:mm").format(c.time)}"
         containerToggle="${style.containerToggle}" containerToggleDuration="${style.containerToggleDuration}" ${style} />
-<%/* The following uses Dojo's TimeSpinner instead.  
+<%/* The following uses Dojo's TimeSpinner instead.
      Be sure to update the corresponding editor.script renderer as well.
     <input dojoType="TimeSpinner"
         value="${new java.text.SimpleDateFormat("HH:mm").format(value)}"
-        delta="1:01" format="hh:mm" 
+        delta="1:01" format="hh:mm"
         widgetId="${name}_timeSpinner">
 */ %>
 

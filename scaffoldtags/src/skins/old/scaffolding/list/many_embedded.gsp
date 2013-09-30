@@ -1,9 +1,9 @@
 <div>
     <g:each var="item" in="${value}">
-        <g:renderDomain template="list" 
-                        domain="${referencedDomain}" name="${name}" 
+        <g:renderDomain template="list"
+                        domain="${referencedDomain}" name="${name}"
                         widgets="${widgets}" style="${style}"
-                        value="${value}" 
+                        value="${value}"
                         except="['id']"/>
     </g:each>
 </div>

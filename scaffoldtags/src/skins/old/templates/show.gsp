@@ -1,4 +1,4 @@
-<%=packageName%>  
+<%=packageName%>
 <html>
     <head>
          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -16,8 +16,8 @@
            <g:if test="\${flash.message}">
                  <div class="message">\${flash.message}</div>
            </g:if>
-           <g:renderDomain domain="\${${className}.class}" 
-                           template="show" 
+           <g:renderDomain domain="\${${className}.class}"
+                           template="show"
                            value="\${${propertyName}}" />
            <div class="buttons">
                <g:form>

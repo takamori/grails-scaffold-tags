@@ -4,7 +4,7 @@
             <g:if test="${style?.actions}">
                 <th class="actionButtons"></th>
             </g:if>
-            <g:eachProperty type="${type}" name="${name}" 
+            <g:eachProperty type="${type}" name="${name}"
                                   except="${['class','metaClass','properties']}" >
                 <th class="property">${it.prop.name}</th>
             </g:eachProperty>
@@ -20,13 +20,13 @@
                         </g:each>
                     </td>
                 </g:if>
-                <g:eachProperty type="${type}" name="${name}" value="${value}" 
+                <g:eachProperty type="${type}" name="${name}" value="${value}"
                                 constraints="${constraints}"
-                                widgets="${widgets}" style="${style}" 
+                                widgets="${widgets}" style="${style}"
                                 except="['class','metaClass','properties']">
                     <td class="property">
                         <g:renderType type="${it.prop.type}" template="list"
-                                      name="${it.name}" value="${it.value}" 
+                                      name="${it.name}" value="${it.value}"
                                       widget="${it.widget}" style="${it.style}" />
                     </td>
                 </g:eachProperty>

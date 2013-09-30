@@ -1,16 +1,16 @@
 <table class="listItem">
     <tbody>
-        <g:eachDomainProperty domain="${domain}" value="${value}" 
-                              widgets="${widgets}" style="${style}" 
-                              except="${except}" exceptWhen="${exceptWhen}" 
-                              only="${only}" 
+        <g:eachDomainProperty domain="${domain}" value="${value}"
+                              widgets="${widgets}" style="${style}"
+                              except="${except}" exceptWhen="${exceptWhen}"
+                              only="${only}"
                               order="${order}">
             <tr>
                 <th class="property">${it.prop.naturalName}</th>
-                <td class="property"><g:renderProperty template="list" 
+                <td class="property"><g:renderProperty template="list"
                                       domain="${domain}" domainId="${value?.id}"
-                                      prop="${it.prop}" value="${it.value}" 
-                                      name="${it.name}" 
+                                      prop="${it.prop}" value="${it.value}"
+                                      name="${it.name}"
                                       widget="${it.widget}" style="${it.style}"/></td>
             </tr>
         </g:eachDomainProperty>

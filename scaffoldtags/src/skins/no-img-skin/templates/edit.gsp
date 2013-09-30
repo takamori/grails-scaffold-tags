@@ -1,3 +1,4 @@
+<%=packageName%>
 <html>
     <head>
          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -21,9 +22,9 @@
                 </div>
             </g:hasErrors>
             <g:form method="post" <%= multiPart ? ' enctype="multipart/form-data"' : '' %>>
-                <g:renderDomain domain="\${${className}.class}" 
-                                template="editor" 
-                                value="\${${propertyName}}" 
+                <g:renderDomain domain="\${${className}.class}"
+                                template="editor"
+                                value="\${${propertyName}}"
                                 style="[id: [readonly: true], actions:[[update: 'Update'], [delete: 'Delete']] ]" />
             </g:form>
         </div>

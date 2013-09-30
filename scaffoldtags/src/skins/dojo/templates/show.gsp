@@ -1,3 +1,4 @@
+<%=packageName%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -16,9 +17,9 @@
                  <div class="message">\${flash.message}</div>
             </g:if>
             <g:if test="\${${propertyName}}">
-                <g:renderDomain domain="\${${className}.class}" 
-                                template="show" 
-                                value="\${${propertyName}}" 
+                <g:renderDomain domain="\${${className}.class}"
+                                template="show"
+                                value="\${${propertyName}}"
                                 style="[actions:[[edit: 'Edit'], [delete: 'Delete']] ]"/>
             </g:if>
         </div>

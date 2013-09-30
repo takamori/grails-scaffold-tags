@@ -6,8 +6,8 @@
                     <g:renderType template="list.item" value="${entry.key}" />
                 </td>
                 <td class="mapEntryValue">
-                    <g:renderType template="list.item" 
-                                  name="${name + '.' + entry.key}" value="${entry.value}" 
+                    <g:renderType template="list.item"
+                                  name="${name + '.' + entry.key}" value="${entry.value}"
                                   widget="${widgets[entry.key]}" style="${style[entry.key]}" />
                 </td>
             </tr>
