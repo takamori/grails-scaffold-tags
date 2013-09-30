@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory
  * @since 08-Mar-2007
  */
 class ScaffoldTagLib {
-    private static final VERSION = "0.7.4"
+    private static final VERSION = "0.7.5"
     private static final Log LOG = LogFactory.getLog(ScaffoldTagLib)
     private static String PATH_TO_VIEWS = "/WEB-INF/grails-app/views"
     private static String PLUGIN_PATH_TO_VIEWS = "/WEB-INF/plugins/scaffold-tags-${VERSION}/grails-app/views"
@@ -726,11 +726,12 @@ class ScaffoldTagLib {
                         "${PATH_TO_VIEWS}/scaffolding",
                         "${PLUGIN_PATH_TO_VIEWS}/scaffolding"]
 
+	LOG.debug "try to find ${view} in ${viewpaths}"
         for (p in viewpaths) {
             if (view instanceof CharSequence) {
                 def uri = "${p}/${view}"
                 def resource = resourceLoader.getResource(uri)
-                if (resource && resource.file && resource.file.exists()) {
+                if (resource?.exists()) {
                     LOG.debug "found-1 in ${uri} at ${resource}"
                     return uri
                 }
@@ -739,7 +740,7 @@ class ScaffoldTagLib {
                     def uri = "${p}/${v}"
                     LOG.debug "searching for ${uri}"
                     def resource = resourceLoader.getResource(uri)
-                    if (resource && resource.file && resource.file.exists()) {
+                    if (resource?.exists()) {
                         LOG.debug "found-2 in ${uri} at ${resource}"
                         return uri
                     }

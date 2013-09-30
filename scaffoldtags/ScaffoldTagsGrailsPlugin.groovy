@@ -25,8 +25,8 @@
   * @since March 25, 2007
   */
 class ScaffoldTagsGrailsPlugin {
-	def version = "0.7.4"
-	def grailsVersion = "2.0 > *"
+	def version = "0.7.5"
+	def grailsVersion = "1.3 > *"
 	def author="Daiji Takamori"
 	def authorEmail="dt_02138@yahoo.com"
 	def title="Adds tags to support fully-customizable & dynamic scaffolding"
